@@ -1,8 +1,2 @@
 streamlit
 mysql-connector-python
-opencv-python-headless
-Pillow
-numpy
-datetime
-pandas
-qrcode[pil]
