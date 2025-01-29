@@ -26,8 +26,8 @@ st.markdown("""
     
 .nav-container {
         position: fixed;
-        top: 50px;
-        right: 20px;
+        top: 60px;
+        right: 10px;
         z-index: 999;
         background: rgba(255, 255, 255, 0.9);
         padding: 8px;
