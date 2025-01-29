@@ -61,7 +61,7 @@ with col2:
                         st.session_state.logged_in = True
                         st.session_state.user_role = "teacher"
                         st.success("Welcome, Teacher!")
-                                           else:
+                    else:
                         st.error("Incorrect email or password for Teacher. Please try again.")
                 elif login_type == "Student":
                     if check_student_login(email, password):
