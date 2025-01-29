@@ -16,7 +16,7 @@ st.markdown("""
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        min-height: 100vh;
+        min-height: 10vh;
     }}
     
     .landing-container {
