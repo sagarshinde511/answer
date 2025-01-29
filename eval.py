@@ -61,7 +61,7 @@ with col2:
                         st.session_state.logged_in = True
                         st.session_state.user_role = "teacher"
                         st.success("Welcome, Teacher!")
-                        #os.system("streamlit run C:\\Users\\DELL\\Desktop\\AI\\pdfEval.py")
+                        os.system("streamlit run C:\\Users\\DELL\\Desktop\\AI\\pdfEval.py")
                     else:
                         st.error("Incorrect email or password for Teacher. Please try again.")
                 elif login_type == "Student":
