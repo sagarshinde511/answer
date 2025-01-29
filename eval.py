@@ -66,8 +66,7 @@ st.markdown("""
 # Main Application
 def main():
     # Handle query parameters
-    params = st.query_params()
-    initial_tab = params.get("tab", ["home"])[0]
+    initial_tab = st.query_params.get("tab", "home")
     
     # Session State Management
     if 'active_tab' not in st.session_state:
@@ -78,8 +77,8 @@ def main():
         st.session_state.user_role = None
 
     # Update tab from query parameters
-    if params.get("tab"):
-        st.session_state.active_tab = params["tab"][0]
+    if st.query_params.get("tab"):
+        st.session_state.active_tab = st.query_params.get("tab")
 
     # Main Content Container
     with st.container():
@@ -146,9 +145,8 @@ def main():
                         
                         if user_data:
                             st.session_state.logged_in = True
-                            st.session_state.user_role = user_data[3]  # Assuming role is in 4th column
-                            st.experimental_set_query_params(tab="home")
-                            st.rerun()
+                            st.session_state.user_role = user_data[3]
+                            st.query_params["tab"] = "home"
                         else:
                             st.error("Invalid credentials")
                     
@@ -181,8 +179,7 @@ def main():
                         )
                         conn.commit()
                         st.success("Account created successfully! Please login.")
-                        st.experimental_set_query_params(tab="login")
-                        st.rerun()
+                        st.query_params["tab"] = "login"
                     
                     except Exception as e:
                         st.error(f"Error creating account: {str(e)}")
