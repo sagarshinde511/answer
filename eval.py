@@ -10,15 +10,10 @@ db_name = "u263681140_students"
 # Custom CSS Styling
 st.markdown("""
 <style>
-[data-testid=stAppViewContainer] {{
-        background-image: url("https://github.com/sagarshinde511/answer/blob/main/background.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        min-height: 10vh;
-    }}
-    
+[data-testid=stAppViewContainer] {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+        min-height: 100vh;
+    }
     .landing-container {
         background: white;
         border-radius: 20px;
