@@ -29,10 +29,10 @@ st.markdown("""
         top: 60px;
         right: 10px;
         z-index: 999;
-        background: rgba(255, 255, 255, 0.9);
+        background: transparent !important;
         padding: 8px;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: None
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
