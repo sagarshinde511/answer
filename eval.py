@@ -38,7 +38,7 @@ st.title("Subjective Answers Evaluation Login Page")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.image("nlp2.jpg", use_column_width=True)  
+    st.image("D:\nlp2.jpg", use_container_width=True)  
 
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
@@ -61,7 +61,7 @@ with col2:
                         st.session_state.logged_in = True
                         st.session_state.user_role = "teacher"
                         st.success("Welcome, Teacher!")
-                        #os.system("streamlit run C:\\Users\\DELL\\Desktop\\AI\\pdfEval.py")
+                        os.system("streamlit run C:\\Users\\DELL\\Desktop\\AI\\pdfEval.py")
                     else:
                         st.error("Incorrect email or password for Teacher. Please try again.")
                 elif login_type == "Student":
