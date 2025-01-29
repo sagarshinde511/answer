@@ -39,7 +39,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     # Add space above the image to shift it down
-    st.markdown("<br><br><br>", unsafe_allow_html=True)  # Adjust the number of <br> tags as needed
+    st.markdown("<br>", unsafe_allow_html=True)  # Adjust the number of <br> tags as needed
     st.image("nlp2.jpg", use_container_width=True)  
 
 if 'logged_in' not in st.session_state:
