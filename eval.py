@@ -97,7 +97,7 @@ def main():
                 col1, col2 = st.columns(2)
                 with col1:
                     st.image("https://cdn.pixabay.com/photo/2018/06/27/07/45/college-student-3500990_1280.jpg", 
-                            use_column_width=True)
+                            use_container_width=True)
                 with col2:
                     st.markdown("""
                     <div style='padding: 2rem;'>
