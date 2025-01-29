@@ -66,7 +66,7 @@ st.markdown("""
 # Main Application
 def main():
     # Handle query parameters
-    params = st.experimental_get_query_params()
+    params = st.query_params()
     initial_tab = params.get("tab", ["home"])[0]
     
     # Session State Management
