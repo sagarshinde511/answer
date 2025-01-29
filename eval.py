@@ -24,7 +24,7 @@ st.markdown("""
         max-width: 1200px;
     }
     
-    .nav-container {
+.nav-container {
         position: fixed;
         top: 20px;
         right: 20px;
@@ -36,6 +36,7 @@ st.markdown("""
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+        max-width: 300px;  /* Added max-width for wrapping */
     }
     
     .nav-container button {
