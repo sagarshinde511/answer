@@ -11,7 +11,7 @@ db_name = "u263681140_students"
 st.markdown("""
 <style>
 [data-testid=stAppViewContainer] {{
-        background-image: url("background.jpg");
+        background-image: url("https://github.com/sagarshinde511/answer/blob/main/background.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
