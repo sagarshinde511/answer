@@ -33,18 +33,18 @@ st.markdown("""
         padding: 8px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
     }
     
     .nav-container button {
-        margin-left: 10px;
         border: none;
         background: linear-gradient(45deg, #4f46e5, #9333ea);
         color: white !important;
         border-radius: 5px;
         padding: 8px 16px;
         transition: all 0.3s ease;
-        display: block;
-        margin-bottom: 5px;
     }
     
     .nav-container button:hover {
@@ -62,8 +62,8 @@ st.markdown("""
 # Navigation Buttons
 st.markdown("""
 <div class="nav-container">
-    <button onclick="window.location.href='#home'">🏠 Home</button><br>
-    <button onclick="window.location.href='#login'">🔑 Login</button><br>
+    <button onclick="window.location.href='#home'">🏠 Home</button>
+    <button onclick="window.location.href='#login'">🔑 Login</button>
     <button onclick="window.location.href='#signup'">📝 Signup</button>
 </div>
 """, unsafe_allow_html=True)
