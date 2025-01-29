@@ -36,7 +36,7 @@ st.markdown("""
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        max-width: 300px;  /* Added max-width for wrapping */
+        max-width: 500px;  /* Added max-width for wrapping */
     }
     
     .nav-container button {
