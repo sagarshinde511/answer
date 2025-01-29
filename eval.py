@@ -124,7 +124,7 @@ def main():
         <button onclick="window.location.href='#signup'">📝 Signup</button>
     </div>
     """, unsafe_allow_html=True)
-
+    st.markdown("<br>", unsafe_allow_html=True)  # Adjust the number of <br> tags as needed
     # Session State Management
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
