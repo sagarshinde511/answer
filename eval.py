@@ -43,6 +43,8 @@ st.markdown("""
         border-radius: 5px;
         padding: 8px 16px;
         transition: all 0.3s ease;
+        display: block;
+        margin-bottom: 5px;
     }
     
     .nav-container button:hover {
@@ -57,74 +59,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Database Functions
-def check_teacher_login(email, password):
-    try:
-        db = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=passwd,
-            database=db_name
-        )
-        cur = db.cursor()
-        cur.execute("SELECT * FROM teacher WHERE mail = %s AND password = %s", (email, password))
-        return cur.fetchone() is not None
-    except Exception as e:
-        st.error(f"Database error: {e}")
-        return False
-    finally:
-        if 'cur' in locals(): cur.close()
-        if 'db' in locals(): db.close()
-
-def check_student_login(email, password):
-    try:
-        db = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=passwd,
-            database=db_name
-        )
-        cur = db.cursor()
-        cur.execute("SELECT * FROM students WHERE email = %s AND password = %s", (email, password))
-        return cur.fetchone() is not None
-    except Exception as e:
-        st.error(f"Database error: {e}")
-        return False
-    finally:
-        if 'cur' in locals(): cur.close()
-        if 'db' in locals(): db.close()
-
-def register_student(name, email, password):
-    try:
-        db = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=passwd,
-            database=db_name
-        )
-        cur = db.cursor()
-        cur.execute("INSERT INTO students (name, email, password) VALUES (%s, %s, %s)",
-                    (name, email, password))
-        db.commit()
-        return True
-    except Exception as e:
-        st.error(f"Registration error: {e}")
-        return False
-    finally:
-        if 'cur' in locals(): cur.close()
-        if 'db' in locals(): db.close()
+# Navigation Buttons
+st.markdown("""
+<div class="nav-container">
+    <button onclick="window.location.href='#home'">🏠 Home</button><br>
+    <button onclick="window.location.href='#login'">🔑 Login</button><br>
+    <button onclick="window.location.href='#signup'">📝 Signup</button>
+</div>
+""", unsafe_allow_html=True)
 
 # Main Application
 def main():
-    # Navigation Buttons
-    st.markdown("""
-    <div class="nav-container">
-        <button onclick="window.location.href='#home'">🏠 Home</button>
-        <button onclick="window.location.href='#login'">🔑 Login</button>
-        <button onclick="window.location.href='#signup'">📝 Signup</button>
-    </div>
-    """, unsafe_allow_html=True)
-    st.markdown("<br>", unsafe_allow_html=True)  # Adjust the number of <br> tags as needed
     # Session State Management
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
@@ -169,51 +114,7 @@ def main():
                         </ul>
                     </div>
                     """, unsafe_allow_html=True)
-
-        # Login Page
-        elif st.session_state.active_tab == "Login":
-            st.markdown("<h1>User Login</h1>", unsafe_allow_html=True)
-            with st.form("login_form"):
-                login_type = st.radio("Login as:", ["Teacher", "Student"], horizontal=True)
-                email = st.text_input("Email:")
-                password = st.text_input("Password", type="password")
-                submitted = st.form_submit_button("Login")
-                
-                if submitted:
-                    if login_type == "Teacher":
-                        if check_teacher_login(email, password):
-                            st.session_state.logged_in = True
-                            st.session_state.user_role = "teacher"
-                            st.session_state.active_tab = "Home"
-                            st.experimental_rerun()
-                        else:
-                            st.error("Invalid teacher credentials")
-                    else:
-                        if check_student_login(email, password):
-                            st.session_state.logged_in = True
-                            st.session_state.user_role = "student"
-                            st.session_state.active_tab = "Home"
-                            st.experimental_rerun()
-                        else:
-                            st.error("Invalid student credentials")
-
-        # Signup Page
-        elif st.session_state.active_tab == "Signup":
-            st.markdown("<h1>Student Registration</h1>", unsafe_allow_html=True)
-            with st.form("signup_form"):
-                name = st.text_input("Full Name:")
-                email = st.text_input("Email:")
-                password = st.text_input("Password", type="password")
-                submitted = st.form_submit_button("Create Account")
-                
-                if submitted:
-                    if register_student(name, email, password):
-                        st.success("Registration successful! Please login.")
-                        st.session_state.active_tab = "Login"
-                        st.experimental_rerun()
-                    else:
-                        st.error("Registration failed. Please try again.")
-
+        
         st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
