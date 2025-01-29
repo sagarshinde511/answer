@@ -97,6 +97,7 @@ def main():
             else:
                 col1, col2 = st.columns(2)
                 with col1:
+                    st.markdown("<br>", unsafe_allow_html=True)  # Adjust the number of <br> tags as needed
                     st.image("https://cdn.pixabay.com/photo/2018/06/27/07/45/college-student-3500990_1280.jpg", 
                             use_container_width=True)
                 with col2:
