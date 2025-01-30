@@ -352,7 +352,7 @@ def login_page():
     """
     <style>
     .stTabs > div > div > div {
-        margin-right: 50px;  /* Adjust the value to your preference */
+        margin-right: 500px;  /* Adjust the value to your preference */
     }
     </style>
     """, unsafe_allow_html=True
