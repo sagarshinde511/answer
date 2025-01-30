@@ -393,4 +393,4 @@ if st.session_state.page == "login":
 elif st.session_state.page == "teacher_dash":
     teacher_dashboard()
 elif st.session_state.page == "admin_dash":
-    admin_dashboard()
+    adminLogin()
