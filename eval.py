@@ -392,5 +392,3 @@ if st.session_state.page == "login":
     login_page()
 elif st.session_state.page == "teacher_dash":
     teacher_dashboard()
-elif st.session_state.page == "admin_dash":
-    adminLogin()
