@@ -141,6 +141,7 @@ def login_page():
         
         with col1:
             # Display the image
+            st.markdown("<br>", unsafe_allow_html=True)
             st.image("nlp2.jpg", use_container_width=True, caption="Automated Answer Evaluation System")
         
         with col2:
