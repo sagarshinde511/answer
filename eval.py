@@ -40,7 +40,6 @@ def fetch_data(table_name):
 def adminLogin():
     #st.set_page_config(page_title="Admin Panel", layout="wide")
     
-    st.header("Administrator Login")
     
     # Admin Login Form (On Main Page)
     with st.form("admin_form"):
@@ -350,7 +349,7 @@ def login_page():
     with tab2:
         RegisterUser()
     with tab3:
-        st.header("Administrator Login")
+        #st.header("Administrator Login")
         adminLogin()
 # -------------------- APP FLOW CONTROL --------------------
 if "page" not in st.session_state:
