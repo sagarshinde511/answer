@@ -348,7 +348,7 @@ def HomePage():
     #st.set_page_config(page_title="Automated Answer Evaluation System", page_icon="📊", layout="centered")
 
     # Background Image (adjust the path if necessary)
-    background_image_url = "https://img.freepik.com/free-vector/abstract-blue-light-pipe-speed-zoom-black-background-technology_1142-9530.jpg?t=st=1738266296~exp=1738269896~hmac=5f29687d125f52e232bf6d7288aaa389fce4717d2ba4512c5467d82949fd2a5d&w=996"  # Update with your image URL
+    background_image_url = "https://www.freepik.com/free-vector/abstract-blue-circle-black-background-technology_34386132.htm#fromView=keyword&page=1&position=12&uuid=dc1355a0-023d-44c3-987d-ba1e0a8270b6&new_detail=true&query=Dark+Website+Background"  # Update with your image URL
  
     # Simple HTML to add background image and style
     st.markdown(
