@@ -44,42 +44,42 @@ def adminLogin():
     
     # Admin Login Form (On Main Page)
     with st.form("admin_form"):
-    email = st.text_input("Admin Email")
-    password = st.text_input("Admin Password", type="password")
-    submit = st.form_submit_button("Admin Login")
+        email = st.text_input("Admin Email")
+        password = st.text_input("Admin Password", type="password")
+        submit = st.form_submit_button("Admin Login")
+        
+        if submit:
+            if check_admin_login(email, password):
+                st.session_state.update({"page": "admin_dash", "role": "admin"})
+                st.success("Admin login successful!")
+                st.rerun()
+            else:
+                st.error("Invalid admin credentials")
+        
+        # Admin Dashboard (Only after successful login)
+        if st.session_state.get("page") == "admin_dash":
+        st.title("Administrator Dashboard")
+        
+        # Radio button to switch between teacher and student data
+        option = st.radio("Select Data to View:", ["Teachers", "Students"])
+        
+        # Fetch and display data based on selection
+        if option == "Teachers":
+            st.subheader("Registered Teachers")
+            teacher_data = fetch_data("teacher")
+            if teacher_data:
+                st.table(teacher_data)
+            else:
+                st.warning("No teacher data found.")
+        
+        elif option == "Students":
+            st.subheader("Registered Students")
+            student_data = fetch_data("students")
+            if student_data:
+                st.table(student_data)
+            else:
+                st.warning("No student data found.")
     
-    if submit:
-        if check_admin_login(email, password):
-            st.session_state.update({"page": "admin_dash", "role": "admin"})
-            st.success("Admin login successful!")
-            st.rerun()
-        else:
-            st.error("Invalid admin credentials")
-    
-    # Admin Dashboard (Only after successful login)
-    if st.session_state.get("page") == "admin_dash":
-    st.title("Administrator Dashboard")
-    
-    # Radio button to switch between teacher and student data
-    option = st.radio("Select Data to View:", ["Teachers", "Students"])
-    
-    # Fetch and display data based on selection
-    if option == "Teachers":
-        st.subheader("Registered Teachers")
-        teacher_data = fetch_data("teacher")
-        if teacher_data:
-            st.table(teacher_data)
-        else:
-            st.warning("No teacher data found.")
-    
-    elif option == "Students":
-        st.subheader("Registered Students")
-        student_data = fetch_data("students")
-        if student_data:
-            st.table(student_data)
-        else:
-            st.warning("No student data found.")
-
 def RegisterUser():
     branches = [
         "Computer Science", 
