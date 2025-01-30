@@ -12,6 +12,12 @@ passwd = "testStudents@123"
 db_name = "u263681140_students"
 
 def evaluate_answers(correct_answers, student_answers):
+            # Logout button
+    if st.button("🔴 Logout"):
+        st.session_state.page = "login"
+        st.session_state.logged_in = False
+        st.rerun()  # Reload the page
+
     vectorizer = TfidfVectorizer()
     marks_obtained = []
     
