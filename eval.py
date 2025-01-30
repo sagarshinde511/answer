@@ -37,9 +37,30 @@ def fetch_data(table_name):
     except Exception as e:
         st.error(f"Database error: {e}")
         return []
+def check_admin_login(email, password):
+    try:
+        conn = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=passwd,
+            database=db_name
+        )
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM admin WHERE mail = %s AND password = %s",
+            (email, password)
+        )
+        return cursor.fetchone() is not None
+    except mysql.connector.Error as err:
+        st.error(f"Database error: {err}")
+        return False
+    finally:
+        if 'conn' in locals() and conn.is_connected():
+            cursor.close()
+            conn.close()
 def adminLogin():
     with st.form("admin_form"):
-        st.subheader("Administrator Login")
+        st.subheader("🧑💼 Administrator Login")
         email = st.text_input("Admin Email")
         password = st.text_input("Admin Password", type="password")
         submit = st.form_submit_button("Login")
@@ -55,13 +76,13 @@ def adminLogin():
     if st.session_state.get("page") == "admin_dash":
         st.title("Administrator Dashboard")
         
-        option = st.radio("Select Data to View:", ["Teachers", "Students"])
+        option = st.radio("Select Data to View:", ["Teachers", "Students"], horizontal=True)
         
         if option == "Teachers":
             st.subheader("Registered Teachers")
             teacher_data = fetch_data("teacher")
             if teacher_data:
-                st.dataframe(teacher_data)
+                st.dataframe(pd.DataFrame(teacher_data))
             else:
                 st.warning("No teacher data found.")
         
@@ -69,10 +90,9 @@ def adminLogin():
             st.subheader("Registered Students")
             student_data = fetch_data("students")
             if student_data:
-                st.dataframe(student_data)
+                st.dataframe(pd.DataFrame(student_data))
             else:
-                st.warning("No student data found.")
-def RegisterUser():
+                st.warning("No student data found.")def RegisterUser():
     branches = [
         "Computer Science", 
         "Mechanical Engineering", 
