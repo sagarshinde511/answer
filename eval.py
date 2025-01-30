@@ -340,16 +340,140 @@ def admin_dashboard():
         st.rerun()
 
     st.write("Admin functionality for answer evaluation")
-    # Add admin-specific features here
+def HomePage():
+   #st.set_page_config(page_title="Automated Answer Evaluation System", page_icon="📊", layout="wide")
+
+    # Background Image (adjust the path if necessary)
+    background_image_url = "https://your-image-url.com"  # Update with your image URL
+
+    # HTML/CSS to add background image and style
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url({background_image_url});
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }}
+        .header {{
+            color: white;
+            text-align: center;
+            font-size: 36px;
+            padding: 50px;
+        }}
+        .subtitle {{
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }}
+        .cta-button {{
+            display: block;
+            margin: 0 auto;
+            padding: 15px 30px;
+            background-color: #FF5722;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }}
+        .cta-button:hover {{
+            background-color: #E64A19;
+        }}
+        .section-title {{
+            text-align: center;
+            font-size: 28px;
+            margin-top: 50px;
+        }}
+        .feature {{
+            display: inline-block;
+            width: 22%;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }}
+        .feature-icon {{
+            font-size: 40px;
+            margin-bottom: 10px;
+        }}
+        </style>
+        """, unsafe_allow_html=True
+    )
+
+    # Main Content
+    st.markdown('<div class="header">Automated Answer Evaluation System</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Efficient, Automated Answer Evaluation at Your Fingertips</div>', unsafe_allow_html=True)
+
+    # Call to Action button
+    if st.button('Get Started', key='get_started', help='Start using the system now'):
+        st.write("Redirecting to the system setup... (You can replace this with an actual link)")
+
+    # Features Section
+    st.markdown('<div class="section-title">Key Features</div>', unsafe_allow_html=True)
+
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown(f"""
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div><b>Instant Grading</b></div>
+            <div>Automated, real-time evaluation of answers.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown(f"""
+        <div class="feature">
+            <div class="feature-icon">✏️</div>
+            <div><b>Customizable Rubrics</b></div>
+            <div>Define grading criteria tailored to your needs.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"""
+        <div class="feature">
+            <div class="feature-icon">🧠</div>
+            <div><b>AI-Powered</b></div>
+            <div>Deep learning algorithms for precise evaluation.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col4:
+        st.markdown(f"""
+        <div class="feature">
+            <div class="feature-icon">💬</div>
+            <div><b>Detailed Feedback</b></div>
+            <div>Personalized feedback for each student.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # How It Works Section
+    st.markdown('<div class="section-title">How It Works</div>', unsafe_allow_html=True)
+    st.markdown("""
+    1. **Submit Answers**: Students submit their answers through the system.
+    2. **Automated Evaluation**: The system evaluates the answers using AI and predefined rubrics.
+    3. **Instant Feedback**: The system provides real-time feedback and grades.
+    4. **Analysis Reports**: Detailed reports and analysis of each submission are generated.
+    """)
+
+    # Footer
+    st.markdown("""
+        <div style="text-align: center; margin-top: 50px; font-size: 14px; color: white;">
+            &copy; 2025 Automated Answer Evaluation System. All Rights Reserved.
+        </div>
+    """, unsafe_allow_html=True)
 
 # -------------------- MAIN PAGE TABS --------------------
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
-    tab1, tab2, tab3 = st.tabs(["Login", "Signup", "Admin Login"])
+    tab1, tab2, tab3 = st.tabs(["Home","Login", "Signup", "Admin Login"])
     
-    with tab1:
+    with tab2:
         col1, col2 = st.columns([2, 3])
-        
+        with tab3:
+            HomePage()
         with col1:
             # Display the image
             st.markdown("<br><br><br>", unsafe_allow_html=True)
@@ -375,9 +499,9 @@ def login_page():
                     else:
                         st.warning("Student login not implemented yet")
 
-    with tab2:
-        RegisterUser()
     with tab3:
+        RegisterUser()
+    with tab4:
         #st.header("Administrator Login")
         adminLogin()
 # -------------------- APP FLOW CONTROL --------------------
