@@ -38,7 +38,7 @@ def fetch_data(table_name):
         st.error(f"Database error: {e}")
         return []
 def adminLogin():
-    st.set_page_config(page_title="Admin Panel", layout="wide")
+    #st.set_page_config(page_title="Admin Panel", layout="wide")
     
     st.header("Administrator Login")
     
