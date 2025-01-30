@@ -57,23 +57,28 @@ def check_admin_login(email, password):
             cursor.close()
             conn.close()
 def adminLogin():
-    with st.form("admin_form"):
-        st.subheader("🧑💼 Administrator Login")
-        email = st.text_input("Admin Email")
-        password = st.text_input("Admin Password", type="password")
-        submit = st.form_submit_button("Login")
+    # Initialize session state
+    if "page" not in st.session_state:
+        st.session_state["page"] = "login"
 
-        if submit:
-            if check_admin_login(email, password):
-                st.session_state.update({"page": "admin_dash", "role": "admin"})
-                st.success("Admin login successful!")
-                st.rerun()
-            else:
-                st.error("Invalid admin credentials")
+    if st.session_state["page"] == "login":
+        with st.form("admin_form"):
+            st.subheader("🧑💼 Administrator Login")
+            email = st.text_input("Admin Email")
+            password = st.text_input("Admin Password", type="password")
+            submit = st.form_submit_button("Login")
 
-    if st.session_state.get("page") == "admin_dash":
+            if submit:
+                if check_admin_login(email, password):
+                    st.session_state.update({"page": "admin_dash", "role": "admin"})
+                    st.success("Admin login successful!")
+                    st.rerun()
+                else:
+                    st.error("Invalid admin credentials")
+
+    elif st.session_state["page"] == "admin_dash":
         st.title("Administrator Dashboard")
-        
+
         # Horizontal radio buttons
         selected_option = st.radio(
             "Select Data to View:",
@@ -81,12 +86,11 @@ def adminLogin():
             horizontal=True,
             key="admin_view"
         )
-        
+
         if selected_option == "Students":
             st.subheader("📚 Student Records")
             student_data = fetch_data("students")
             if student_data:
-                # Convert to DataFrame for better table display
                 df = pd.DataFrame(student_data)
                 st.dataframe(df)
             else:
@@ -96,7 +100,6 @@ def adminLogin():
             st.subheader("👩🏫 Teacher Records")
             teacher_data = fetch_data("teacher")
             if teacher_data:
-                # Convert to DataFrame for better table display
                 df = pd.DataFrame(teacher_data)
                 st.dataframe(df)
             else:
@@ -106,7 +109,9 @@ def adminLogin():
         st.markdown("---")
         if st.button("🚪 Logout"):
             st.session_state.clear()
+            st.session_state["page"] = "login"
             st.rerun()
+
 def RegisterUser():
     branches = [
         "Computer Science", 
