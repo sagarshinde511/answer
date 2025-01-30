@@ -9,6 +9,7 @@ from fpdf import FPDF
 # Database configuration
 host = "82.180.143.66"
 user = "u263681140_students"
+
 passwd = "testStudents@123"
 db_name = "u263681140_students"
 # Function to check admin credentials
