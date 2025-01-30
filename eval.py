@@ -349,7 +349,7 @@ def admin_dashboard():
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
     
-    tab1, tab2, tab3 = st.tabs(["Login", "Signup", "Admin Login"])
+    tab1, tab2, tab3 = st.tabs(["            Login            ", "            Signup            ", "           Admin Login        "])
     
     with tab1:
         col1, col2 = st.columns([2, 3])
