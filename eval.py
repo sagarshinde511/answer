@@ -9,7 +9,6 @@ from fpdf import FPDF
 # Database configuration
 host = "82.180.143.66"
 user = "u263681140_students"
-
 passwd = "testStudents@123"
 db_name = "u263681140_students"
 # Function to check admin credentials
@@ -17,10 +16,10 @@ db_name = "u263681140_students"
 # Function to connect to MySQL database
 def get_db_connection():
     return mysql.connector.connect(
-        host="your_host",
-        user="your_user",
-        password="your_password",
-        database="your_database"
+        host=82.180.143.66,
+        user="u263681140_students",
+        password="testStudents@123",
+        database="u263681140_students"
     )
 
 # Function to fetch data from a table
