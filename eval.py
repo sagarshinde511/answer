@@ -37,7 +37,8 @@ st.title("Subjective Answers Evaluation Login Page")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.image("nlp2.jpg", use_container_width=True)  # Updated parameter
+    st.markdown("<br>", unsafe_allow_html=True)  # Add a <br> tag before the image
+    st.image("nlp2.jpg", use_container_width=True)
 
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
