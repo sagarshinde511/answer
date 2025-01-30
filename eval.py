@@ -348,16 +348,6 @@ def admin_dashboard():
 # -------------------- MAIN PAGE TABS --------------------
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
-    st.markdown(
-    """
-    <style>
-    .stTabs > div > div > div {
-        margin-right: 500px;  /* Adjust the value to your preference */
-    }
-    </style>
-    """, unsafe_allow_html=True
-    )
-
     tab1, tab2, tab3 = st.tabs(["Login", "Signup", "Admin Login"])
     
     with tab1:
