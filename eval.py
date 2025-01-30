@@ -72,8 +72,6 @@ def generate_pdf(results, total_marks_obtained, total_max_marks):
     pdf.output(pdf_output)
     return pdf_output
 
-
-
 def check_teacher_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
@@ -99,8 +97,9 @@ def check_student_login(email, password):
     finally:
         cur.close()
         db.close()
+
 def main():
-# Streamlit UI
+    # Streamlit UI
     st.title("📊 Student Answer Evaluation System")
     
     # File uploaders
@@ -161,8 +160,9 @@ with col2:
                     if check_teacher_login(email, password):
                         st.session_state.logged_in = True
                         st.session_state.user_role = "teacher"
+                        st.session_state.clear()  # Reset session state data (clear page)
                         st.success("Welcome, Teacher!")
-                        main()
+                        main()  # Show teacher dashboard
                     else:
                         st.error("Incorrect email or password for Teacher. Please try again.")
                 
