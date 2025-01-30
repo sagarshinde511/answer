@@ -12,7 +12,146 @@ user = "u263681140_students"
 passwd = "testStudents@123"
 db_name = "u263681140_students"
 
-# -------------------- HELPER FUNCTIONS --------------------
+def RegisterUser():
+    branches = [
+        "Computer Science", 
+        "Mechanical Engineering", 
+        "Electrical Engineering", 
+        "Civil Engineering", 
+        "Electronics and Communication", 
+        "Information Technology",
+        "Chemical Engineering", 
+        "Aerospace Engineering"
+    ]
+    st.title("Registration Form")
+
+    registration_type = st.selectbox("Select Registration Type", ["Teacher", "Student"])
+
+    with st.form("registration_form"):
+        if registration_type == "Teacher":
+            name = st.text_input("Name")
+            mail = st.text_input("Email")
+            mobile = st.text_input("Mobile Number")
+            password = st.text_input("Password", type="password")
+            branch = st.selectbox("Branch", branches)  
+            submitted = st.form_submit_button("Register")
+
+            if submitted:
+                if name and mail and mobile and password and branch:
+                    if not is_valid_email(mail):
+                        st.warning("Please enter a valid email address!")
+                    elif not is_valid_mobile(mobile):
+                        st.warning("Mobile number must be 10 digits!")
+                    else:
+                        insert_teacher(name, mail, mobile, password, branch)
+                else:
+                    st.warning("Please fill all the fields!")
+        
+        elif registration_type == "Student":
+            name = st.text_input("Name")
+            enrolment = st.text_input("Enrolment Number")
+            mail = st.text_input("Email")
+            mobile = st.text_input("Mobile Number")
+            password = st.text_input("Password", type="password")
+            branch = st.selectbox("Branch", branches) 
+            submitted = st.form_submit_button("Register")
+
+            if submitted:
+                if name and enrolment and mail and mobile and password and branch:
+                    if not is_valid_email(mail):
+                        st.warning("Please enter a valid email address!")
+                    elif not is_valid_mobile(mobile):
+                        st.warning("Mobile number must be 10 digits!")
+                    else:
+                        insert_student(name, enrolment, mail, mobile, password, branch)
+                else:
+                    st.warning("Please fill all the fields!")
+
+def is_valid_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(pattern, email) is not None
+
+def is_valid_mobile(mobile):
+    pattern = r'^\d{10}$'
+    return re.match(pattern, mobile) is not None
+
+def teacher_email_exists(mail):
+    db, cur = None, None
+    try:
+        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        cur = db.cursor()
+        cur.execute("SELECT * FROM teacher WHERE mail = %s", (mail,))
+        return cur.fetchone() is not None
+    finally:
+        if cur:
+            cur.close()
+        if db:
+            db.close()
+
+def student_exists(mail, enrolment):
+    db, cur = None, None
+    try:
+        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        cur = db.cursor()
+        cur.execute("SELECT * FROM students WHERE email = %s OR enrolment = %s", (mail, enrolment))
+        return cur.fetchone() is not None
+    finally:
+        if cur:
+            cur.close()
+        if db:
+            db.close()
+
+def insert_teacher(name, mail, mobile, password, branch):
+    db, cur = None, None
+    try:
+        if teacher_email_exists(mail):
+            st.warning("Email already exists for another teacher!")
+            return
+
+        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        cur = db.cursor()
+
+        insert_query = '''INSERT INTO teacher (name, mail, mobile, password, branch) 
+                          VALUES (%s, %s, %s, %s, %s);'''
+        cur.execute(insert_query, (name, mail, mobile, password, branch))
+        db.commit()
+        st.success("Teacher registered successfully!")
+
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    finally:
+        if cur:
+            cur.close()
+        if db:
+            db.close()
+
+def insert_student(name, enrolment, mail, mobile, password, branch):
+    db, cur = None, None
+    try:
+        if student_exists(mail, enrolment):
+            st.warning("Email or enrolment number already exists for another student!")
+            return
+
+        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        cur = db.cursor()
+
+        insert_query = '''INSERT INTO students (name, enrolment, email, mobile, password, branch) 
+                          VALUES (%s, %s, %s, %s, %s, %s);'''
+        cur.execute(insert_query, (name, enrolment, mail, mobile, password, branch))
+        db.commit()
+        st.success("Student registered successfully!")
+
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    finally:
+        if cur:
+            cur.close()
+        if db:
+            db.close()
+
+
 def evaluate_answers(correct_answers, student_answers):
     vectorizer = TfidfVectorizer()
     marks_obtained = []
@@ -48,8 +187,6 @@ def evaluate_answers(correct_answers, student_answers):
     
     student_answers['Marks_Obtained'] = marks_obtained
     return student_answers
-
-# -------------------- AUTHENTICATION FUNCTIONS --------------------
 def check_teacher_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
@@ -70,28 +207,6 @@ def check_admin_login(email, password):
         return cur.fetchone() is not None
     except Exception as e:
         st.error(f"Database error: {e}")
-        return False
-    finally:
-        if 'db' in locals(): db.close()
-
-def signup_user(name, email, password, role):
-    try:
-        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
-        cur = db.cursor()
-        table = "teacher" if role == "Teacher" else "student"
-        
-        # Check existing user
-        cur.execute(f"SELECT * FROM {table} WHERE mail = %s", (email,))
-        if cur.fetchone():
-            return False
-            
-        # Insert new user
-        cur.execute(f"INSERT INTO {table} (name, mail, password) VALUES (%s, %s, %s)", 
-                   (name, email, password))
-        db.commit()
-        return True
-    except Exception as e:
-        st.error(f"Error: {e}")
         return False
     finally:
         if 'db' in locals(): db.close()
@@ -165,20 +280,7 @@ def login_page():
                         st.warning("Student login not implemented yet")
 
     with tab2:
-        st.header("New User Signup")
-        with st.form("signup_form"):
-            name = st.text_input("Full Name")
-            email = st.text_input("Email")
-            password = st.text_input("Password", type="password")
-            role = st.selectbox("Select Role", ["Teacher", "Student"])
-            submit = st.form_submit_button("Create Account")
-            
-            if submit:
-                if signup_user(name, email, password, role):
-                    st.success("Account created successfully! Please login.")
-                else:
-                    st.error("Error creating account or email already exists")
-
+        RegisterUser()
     with tab3:
         st.header("Administrator Login")
         with st.form("admin_form"):
