@@ -175,11 +175,10 @@ def is_valid_email(email):
 def is_valid_mobile(mobile):
     pattern = r'^\d{10}$'
     return re.match(pattern, mobile) is not None
-
 def teacher_email_exists(mail):
     db, cur = None, None
     try:
-        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
         cur.execute("SELECT * FROM teacher WHERE mail = %s", (mail,))
         return cur.fetchone() is not None
@@ -192,7 +191,7 @@ def teacher_email_exists(mail):
 def student_exists(mail, enrolment):
     db, cur = None, None
     try:
-        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
         cur.execute("SELECT * FROM students WHERE email = %s OR enrolment = %s", (mail, enrolment))
         return cur.fetchone() is not None
