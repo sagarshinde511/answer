@@ -57,7 +57,7 @@ def adminLogin():
                 st.error("Invalid admin credentials")
         
         # Admin Dashboard (Only after successful login)
-        if st.session_state.get("page") == "admin_dash":
+    if st.session_state.get("page") == "admin_dash":
         st.title("Administrator Dashboard")
         
         # Radio button to switch between teacher and student data
