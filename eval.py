@@ -91,7 +91,8 @@ def adminLogin():
             if student_data:
                 st.dataframe(pd.DataFrame(student_data))
             else:
-                st.warning("No student data found.")def RegisterUser():
+                st.warning("No student data found.")
+def RegisterUser():
     branches = [
         "Computer Science", 
         "Mechanical Engineering", 
