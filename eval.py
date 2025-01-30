@@ -344,9 +344,13 @@ def HomePage():
    #st.set_page_config(page_title="Automated Answer Evaluation System", page_icon="📊", layout="wide")
 
     # Background Image (adjust the path if necessary)
-    background_image_url = "https://cdn.pixabay.com/photo/2018/06/27/07/45/college-student-3500990_1280.jpg"  # Update with your image URL
+    # Set up page configuration
+    #st.set_page_config(page_title="Automated Answer Evaluation System", page_icon="📊", layout="centered")
 
-    # HTML/CSS to add background image and style
+    # Background Image (adjust the path if necessary)
+    background_image_url = "https://cdn.pixabay.com/photo/2018/06/27/07/45/college-student-3500990_1280.jpg"  # Update with your image URL
+ 
+    # Simple HTML to add background image and style
     st.markdown(
         f"""
         <style>
@@ -357,16 +361,16 @@ def HomePage():
             background-attachment: fixed;
         }}
         .header {{
-            color: white;
             text-align: center;
-            font-size: 36px;
+            color: white;
+            font-size: 40px;
             padding: 50px;
         }}
         .subtitle {{
-            color: white;
             text-align: center;
+            color: white;
             font-size: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }}
         .cta-button {{
             display: block;
@@ -382,23 +386,21 @@ def HomePage():
         .cta-button:hover {{
             background-color: #E64A19;
         }}
-        .section-title {{
+        .section {{
+            margin-top: 30px;
+            padding: 20px;
             text-align: center;
-            font-size: 28px;
-            margin-top: 50px;
+        }}
+        .features {{
+            display: flex;
+            justify-content: space-around;
         }}
         .feature {{
-            display: inline-block;
-            width: 22%;
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 20px;
-            margin: 10px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
-        }}
-        .feature-icon {{
-            font-size: 40px;
-            margin-bottom: 10px;
+            width: 22%;
+            text-align: center;
         }}
         </style>
         """, unsafe_allow_html=True
@@ -413,50 +415,26 @@ def HomePage():
         st.write("Redirecting to the system setup... (You can replace this with an actual link)")
 
     # Features Section
-    st.markdown('<div class="section-title">Key Features</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section"><h3>Key Features</h3></div>', unsafe_allow_html=True)
 
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown(f"""
-        <div class="feature">
-            <div class="feature-icon">⚡</div>
-            <div><b>Instant Grading</b></div>
-            <div>Automated, real-time evaluation of answers.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown(f"""
-        <div class="feature">
-            <div class="feature-icon">✏️</div>
-            <div><b>Customizable Rubrics</b></div>
-            <div>Define grading criteria tailored to your needs.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown(f"""
-        <div class="feature">
-            <div class="feature-icon">🧠</div>
-            <div><b>AI-Powered</b></div>
-            <div>Deep learning algorithms for precise evaluation.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col4:
-        st.markdown(f"""
-        <div class="feature">
-            <div class="feature-icon">💬</div>
-            <div><b>Detailed Feedback</b></div>
-            <div>Personalized feedback for each student.</div>
-        </div>
-        """, unsafe_allow_html=True)
+    # Using simple flex layout to arrange features
+    features = [
+        ("⚡", "Instant Grading", "Automated, real-time evaluation of answers."),
+        ("✏️", "Customizable Rubrics", "Define grading criteria tailored to your needs."),
+        ("🧠", "AI-Powered", "Deep learning algorithms for precise evaluation."),
+        ("💬", "Detailed Feedback", "Personalized feedback for each student.")
+    ]
 
-    # How It Works Section
-    st.markdown('<div class="section-title">How It Works</div>', unsafe_allow_html=True)
-    st.markdown("""
-    1. **Submit Answers**: Students submit their answers through the system.
-    2. **Automated Evaluation**: The system evaluates the answers using AI and predefined rubrics.
-    3. **Instant Feedback**: The system provides real-time feedback and grades.
-    4. **Analysis Reports**: Detailed reports and analysis of each submission are generated.
-    """)
+    st.markdown('<div class="features">', unsafe_allow_html=True)
+    for icon, title, description in features:
+        st.markdown(f"""
+        <div class="feature">
+            <div>{icon}</div>
+            <div><b>{title}</b></div>
+            <div>{description}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown("""
