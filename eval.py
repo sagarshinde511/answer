@@ -201,7 +201,6 @@ def student_exists(mail, enrolment):
             cur.close()
         if db:
             db.close()
-
 def insert_teacher(name, mail, mobile, password, branch):
     db, cur = None, None
     try:
@@ -209,7 +208,7 @@ def insert_teacher(name, mail, mobile, password, branch):
             st.warning("Email already exists for another teacher!")
             return
 
-        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
 
         insert_query = '''INSERT INTO teacher (name, mail, mobile, password, branch) 
@@ -234,7 +233,7 @@ def insert_student(name, enrolment, mail, mobile, password, branch):
             st.warning("Email or enrolment number already exists for another student!")
             return
 
-        db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db_name)
+        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
 
         insert_query = '''INSERT INTO students (name, enrolment, email, mobile, password, branch) 
@@ -251,8 +250,6 @@ def insert_student(name, enrolment, mail, mobile, password, branch):
             cur.close()
         if db:
             db.close()
-
-
 def evaluate_answers(correct_answers, student_answers):
     vectorizer = TfidfVectorizer()
     marks_obtained = []
