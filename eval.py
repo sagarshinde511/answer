@@ -350,7 +350,6 @@ def HomePage():
     # Background Image (adjust the path if necessary)
     background_image_url = "https://www.freepik.com/free-vector/abstract-blue-circle-black-background-technology_34386132.htm#fromView=keyword&page=1&position=12&uuid=dc1355a0-023d-44c3-987d-ba1e0a8270b6&new_detail=true&query=Dark+Website+Background"  # Update with your image URL
  
-    # Simple HTML to add background image and style
     st.markdown(
         f"""
         <style>
@@ -394,6 +393,7 @@ def HomePage():
         .features {{
             display: flex;
             justify-content: space-around;
+            gap: 20px;
         }}
         .feature {{
             background-color: rgba(255, 255, 255, 0.7);
@@ -417,24 +417,44 @@ def HomePage():
     # Features Section
     st.markdown('<div class="section"><h3>Key Features</h3></div>', unsafe_allow_html=True)
 
-    # Using simple flex layout to arrange features
-    features = [
-        ("⚡", "Instant Grading", "Automated, real-time evaluation of answers."),
-        ("✏️", "Customizable Rubrics", "Define grading criteria tailored to your needs."),
-        ("🧠", "AI-Powered", "Deep learning algorithms for precise evaluation."),
-        ("💬", "Detailed Feedback", "Personalized feedback for each student.")
-    ]
+    # Using st.columns to display features in a row
+    col1, col2, col3, col4 = st.columns(4)
 
-    st.markdown('<div class="features">', unsafe_allow_html=True)
-    for icon, title, description in features:
+    with col1:
         st.markdown(f"""
         <div class="feature">
-            <div>{icon}</div>
-            <div><b>{title}</b></div>
-            <div>{description}</div>
+            <div>⚡</div>
+            <div><b>Instant Grading</b></div>
+            <div>Automated, real-time evaluation of answers.</div>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+
+    with col2:
+        st.markdown(f"""
+        <div class="feature">
+            <div>✏️</div>
+            <div><b>Customizable Rubrics</b></div>
+            <div>Define grading criteria tailored to your needs.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown(f"""
+        <div class="feature">
+            <div>🧠</div>
+            <div><b>AI-Powered</b></div>
+            <div>Deep learning algorithms for precise evaluation.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col4:
+        st.markdown(f"""
+        <div class="feature">
+            <div>💬</div>
+            <div><b>Detailed Feedback</b></div>
+            <div>Personalized feedback for each student.</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Footer
     st.markdown("""
@@ -442,7 +462,6 @@ def HomePage():
             &copy; 2025 Automated Answer Evaluation System. All Rights Reserved.
         </div>
     """, unsafe_allow_html=True)
-
 # -------------------- MAIN PAGE TABS --------------------
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
