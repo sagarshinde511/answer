@@ -468,12 +468,12 @@ def HomePage():
 # -------------------- MAIN PAGE TABS --------------------
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
-    tab1, tab2, tab3 = st.tabs(["Home","Login", "Signup", "Admin Login"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Home","Login", "Signup", "Admin Login"])
+    with tab1:
+            HomePage()
     
     with tab2:
         col1, col2 = st.columns([2, 3])
-        with tab3:
-            HomePage()
         with col1:
             # Display the image
             st.markdown("<br><br><br>", unsafe_allow_html=True)
