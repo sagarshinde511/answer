@@ -137,24 +137,31 @@ def login_page():
     tab1, tab2, tab3 = st.tabs(["Login", "Signup", "Admin Login"])
     
     with tab1:
-        st.header("User Login")
-        login_type = st.selectbox("Select Role", ["Teacher", "Student"], key="login_role")
+        col1, col2 = st.columns([2, 3])
         
-        with st.form("login_form"):
-            email = st.text_input("Email")
-            password = st.text_input("Password", type="password")
-            submit = st.form_submit_button("Login")
+        with col1:
+            # Display the image
+            st.image("nlp2.jpg", use_container_width=True, caption="Automated Answer Evaluation System")
+        
+        with col2:
+            st.header("User Login")
+            login_type = st.selectbox("Select Role", ["Teacher", "Student"], key="login_role")
             
-            if submit:
-                if login_type == "Teacher":
-                    if check_teacher_login(email, password):
-                        st.session_state.update({"page": "teacher_dash", "role": "teacher"})
-                        st.success("Login successful!")
-                        st.rerun()
+            with st.form("login_form"):
+                email = st.text_input("Email")
+                password = st.text_input("Password", type="password")
+                submit = st.form_submit_button("Login")
+                
+                if submit:
+                    if login_type == "Teacher":
+                        if check_teacher_login(email, password):
+                            st.session_state.update({"page": "teacher_dash", "role": "teacher"})
+                            st.success("Login successful!")
+                            st.rerun()
+                        else:
+                            st.error("Invalid credentials")
                     else:
-                        st.error("Invalid credentials")
-                else:
-                    st.warning("Student login not implemented yet")
+                        st.warning("Student login not implemented yet")
 
     with tab2:
         st.header("New User Signup")
