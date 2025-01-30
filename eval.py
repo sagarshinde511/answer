@@ -410,10 +410,6 @@ def HomePage():
     st.markdown('<div class="header">Automated Answer Evaluation System</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Efficient, Automated Answer Evaluation at Your Fingertips</div>', unsafe_allow_html=True)
 
-    # Call to Action button
-    if st.button('Get Started', key='get_started', help='Start using the system now'):
-        st.write("Redirecting to the system setup... (You can replace this with an actual link)")
-
     # Features Section
     st.markdown('<div class="section"><h3>Key Features</h3></div>', unsafe_allow_html=True)
 
