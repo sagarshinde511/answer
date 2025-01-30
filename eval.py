@@ -75,23 +75,39 @@ def adminLogin():
     if st.session_state.get("page") == "admin_dash":
         st.title("Administrator Dashboard")
         
-        option = st.radio("Select Data to View:", ["Teachers", "Students"], horizontal=True)
+        # Horizontal radio buttons
+        selected_option = st.radio(
+            "Select Data to View:",
+            ["Students", "Teachers"],
+            horizontal=True,
+            key="admin_view"
+        )
         
-        if option == "Teachers":
-            st.subheader("Registered Teachers")
-            teacher_data = fetch_data("teacher")
-            if teacher_data:
-                st.dataframe(pd.DataFrame(teacher_data))
-            else:
-                st.warning("No teacher data found.")
-        
-        elif option == "Students":
-            st.subheader("Registered Students")
+        if selected_option == "Students":
+            st.subheader("📚 Student Records")
             student_data = fetch_data("students")
             if student_data:
-                st.dataframe(pd.DataFrame(student_data))
+                # Convert to DataFrame for better table display
+                df = pd.DataFrame(student_data)
+                st.dataframe(df)
             else:
-                st.warning("No student data found.")
+                st.warning("No student data found in the database.")
+
+        elif selected_option == "Teachers":
+            st.subheader("👩🏫 Teacher Records")
+            teacher_data = fetch_data("teacher")
+            if teacher_data:
+                # Convert to DataFrame for better table display
+                df = pd.DataFrame(teacher_data)
+                st.dataframe(df)
+            else:
+                st.warning("No teacher data found in the database.")
+
+        # Add logout button at bottom
+        st.markdown("---")
+        if st.button("🚪 Logout"):
+            st.session_state.clear()
+            st.rerun()
 def RegisterUser():
     branches = [
         "Computer Science", 
