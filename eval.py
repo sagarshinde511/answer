@@ -344,7 +344,7 @@ def HomePage():
    #st.set_page_config(page_title="Automated Answer Evaluation System", page_icon="📊", layout="wide")
 
     # Background Image (adjust the path if necessary)
-    background_image_url = "https://your-image-url.com"  # Update with your image URL
+    background_image_url = "https://cdn.pixabay.com/photo/2018/06/27/07/45/college-student-3500990_1280.jpg"  # Update with your image URL
 
     # HTML/CSS to add background image and style
     st.markdown(
