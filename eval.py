@@ -109,7 +109,6 @@ def teacher_dashboard():
             st.rerun()  # Reload the page
 
 def login_page():
-    """Displays the login form and handles authentication."""
     st.title("🔑 Subjective Answers Evaluation Login Page")
 
     col1, col2 = st.columns(2)
