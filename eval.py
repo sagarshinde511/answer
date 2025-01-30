@@ -13,7 +13,7 @@ passwd = "testStudents@123"
 db_name = "u263681140_students"
 # Function to check admin credentials
 def check_admin_login(email, password):
-    return email == "admin@gmail.com" and password == "admin123"
+    return email == "admin" and password == "123"
 
 # Function to connect to MySQL database
 def get_db_connection():
