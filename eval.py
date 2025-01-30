@@ -387,8 +387,5 @@ if "page" not in st.session_state:
         "logged_in": False,
         "role": None
     })
-
-if st.session_state.page == "login":
+if(__name__ == "__main__"):
     login_page()
-elif st.session_state.page == "teacher_dash":
-    teacher_dashboard()
