@@ -55,23 +55,6 @@ def evaluate_answers(correct_answers, student_answers):
     student_answers['Marks_Obtained'] = marks_obtained
     return student_answers
 
-def generate_pdf(results, total_marks_obtained, total_max_marks):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Student Evaluation Report", ln=True, align='C')
-    pdf.ln(10)
-    
-    for index, row in results.iterrows():
-        pdf.cell(200, 10, txt=f"Q{row['Question']}: {row['Marks_Obtained']} marks", ln=True)
-    
-    pdf.ln(10)
-    pdf.cell(200, 10, txt=f"Total Marks Obtained: {total_marks_obtained} / {total_max_marks}", ln=True)
-    
-    pdf_output = "evaluation_results.pdf"
-    pdf.output(pdf_output)
-    return pdf_output
-
 def check_teacher_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
@@ -85,23 +68,10 @@ def check_teacher_login(email, password):
         cur.close()
         db.close()
 
-def check_student_login(email, password):
-    try:
-        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
-        cur = db.cursor()
-        cur.execute("SELECT * FROM students WHERE email = %s AND password = %s", (email, password))
-        return cur.fetchone() is not None
-    except Exception as e:
-        st.error(f"Database error: {e}")
-        return False
-    finally:
-        cur.close()
-        db.close()
+def teacher_dashboard():
+    """Displays the teacher's evaluation dashboard after login."""
+    st.title("📊 Teacher Dashboard - Student Answer Evaluation")
 
-def main():
-    # Streamlit UI
-    st.title("📊 Student Answer Evaluation System")
-    
     # File uploaders
     correct_file = st.file_uploader("Upload Correct Answers CSV", type=["csv"])
     student_file = st.file_uploader("Upload Student Answers CSV", type=["csv"])
@@ -125,53 +95,49 @@ def main():
         csv = results.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results (CSV)", data=csv, file_name="evaluated_results.csv", mime="text/csv")
         
-        # Option to download results as PDF
-        if st.button("📥 Download Results (PDF)"):
-            pdf_file = generate_pdf(results, total_marks_obtained, total_max_marks)
-            with open(pdf_file, "rb") as f:
-                st.download_button("📥 Download PDF", f, file_name="evaluation_results.pdf", mime="application/pdf")
+        # Logout button
+        if st.button("🔴 Logout"):
+            st.session_state.page = "login"
+            st.session_state.logged_in = False
+            st.rerun()  # Reload the page
 
-st.title("Subjective Answers Evaluation Login Page")
+def login_page():
+    """Displays the login form and handles authentication."""
+    st.title("🔑 Subjective Answers Evaluation Login Page")
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-with col1:
-    st.markdown("<br>", unsafe_allow_html=True)  # Add a <br> tag before the image
-    st.image("nlp2.jpg", use_container_width=True)
+    with col1:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.image("nlp2.jpg", use_container_width=True)
 
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
-    st.session_state.user_role = None
+    with col2:
+        st.markdown("<h2 style='font-size: 30px;'>Login System</h2>", unsafe_allow_html=True)
 
-with col2:
-    st.markdown("<h2 style='font-size: 30px;'>Login System</h2>", unsafe_allow_html=True)
-
-    if not st.session_state.logged_in:
         login_type = st.selectbox("Login as:", ["Teacher", "Student"])
 
         with st.form("login_form"):
             email = st.text_input("Email:")
             password = st.text_input("Password", type="password")
-
             submitted = st.form_submit_button("Login")
 
             if submitted:
                 if login_type == "Teacher":
                     if check_teacher_login(email, password):
+                        st.session_state.page = "dashboard"
                         st.session_state.logged_in = True
-                        st.session_state.user_role = "teacher"
-                        st.session_state.clear()  # Reset session state data (clear page)
-                        st.success("Welcome, Teacher!")
-                        main()  # Show teacher dashboard
+                        st.success("✅ Login successful! Redirecting to dashboard...")
+                        st.rerun()  # Refresh the page
                     else:
-                        st.error("Incorrect email or password for Teacher. Please try again.")
-                
-                elif login_type == "Student":
-                    if check_student_login(email, password):
-                        st.session_state.logged_in = True
-                        st.session_state.user_role = "student"
-                        st.success("Welcome, Student!")
-                    else:
-                        st.error("Incorrect email or password for Student. Please try again.")
-    else:
-        st.success(f"Already logged in as {st.session_state.user_role}")
+                        st.error("❌ Incorrect email or password for Teacher. Please try again.")
+                else:
+                    st.error("🚫 Only teacher login is implemented for now.")
+
+# -------------------- MAIN APP LOGIC --------------------
+if "page" not in st.session_state:
+    st.session_state.page = "login"
+
+if st.session_state.page == "login":
+    login_page()
+elif st.session_state.page == "dashboard":
+    teacher_dashboard()
