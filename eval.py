@@ -38,10 +38,6 @@ def fetch_data(table_name):
         st.error(f"Database error: {e}")
         return []
 def adminLogin():
-    #st.set_page_config(page_title="Admin Panel", layout="wide")
-    
-    
-    # Admin Login Form (On Main Page)
     with st.form("admin_form"):
         email = st.text_input("Admin Email")
         password = st.text_input("Admin Password", type="password")
@@ -49,7 +45,7 @@ def adminLogin():
         
         if submit:
             if check_admin_login(email, password):
-                st.session_state.update({"page": "admin_dash", "role": "admin"})
+                #st.session_state.update({"page": "admin_dash", "role": "admin"})
                 st.success("Admin login successful!")
                 st.rerun()
             else:
