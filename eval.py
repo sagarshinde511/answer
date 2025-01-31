@@ -459,9 +459,32 @@ if(__name__ == "__main__"):
         st.write("Well Come:", email)
         student_info = fetch_student_info(email)
         if student_info:
-            st.subheader("Profile")
-            profile_option = st.radio("Select Information", ["Name", "Enrolment", "Email", "Mobile", "Branch"], index=0)
-            st.write(f"{profile_option}: {student_info[profile_option.lower()]}")
+            st.subheader("Student Dashboard")
+            
+            # Create radio buttons for navigation
+            selected_tab = st.radio("Select View", ["Profile", "Marks"], horizontal=True)
+            
+            if selected_tab == "Profile":
+                # Convert student info to DataFrame and display in table format
+                profile_df = pd.DataFrame([{
+                    "Name": student_info['name'],
+                    "Enrolment": student_info['enrolment'],
+                    "Email": student_info['email'],
+                    "Mobile": student_info['mobile'],
+                    "Branch": student_info['branch']
+                }])
+                
+                st.write("### Student Profile")
+                st.dataframe(profile_df,
+                            use_container_width=True,
+                            hide_index=True,
+                            column_config={
+                                "Name": "Student Name",
+                                "Enrolment": "Enrollment Number"
+                            })
+            else:
+                st.write("### Marks Information")
+                st.info("Marks details will be displayed here once available")
         else:
             st.error("Student information not found")
     elif st.session_state.page == "admin_dash":
