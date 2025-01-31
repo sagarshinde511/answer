@@ -422,7 +422,7 @@ def admin_dashboard():
         st.session_state.update({"page": "login", "logged_in": False})
         st.rerun()
 
-    st.write("Admin functionality for answer evaluation")
+    #st.write("Admin functionality for answer evaluation")
 def HomePage():
     st.image("background.jpg", use_container_width=True, caption="Automated Answer Evaluation System")
     background_image_url = "https://www.freepik.com/free-vector/abstract-blue-circle-black-background-technology_34386132.htm#fromView=keyword&page=1&position=12&uuid=dc1355a0-023d-44c3-987d-ba1e0a8270b6&new_detail=true&query=Dark+Website+Background"  # Update with your image URL
