@@ -390,7 +390,6 @@ def login_page():
                 email = st.text_input("Email")
                 password = st.text_input("Password", type="password")
                 submit = st.form_submit_button("Login")
-                global_var = email
                 if submit:
                     if login_type == "Teacher":
                         if check_teacher_login(email, password):
@@ -401,6 +400,7 @@ def login_page():
                             st.error("Invalid credentials")
                     elif login_type == "Student":
                         if check_student_login(email, password):
+                            st.session_state["email"] = email 
                             st.session_state.update({"page": "student_dash", "role": "student"})
                             st.success("Login successful!")
                             st.rerun()
@@ -432,7 +432,7 @@ if(__name__ == "__main__"):
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
         email = st.session_state.get("email")
-        st.write("The email id is:", global_var)
+        st.write("The email id is:", email)
         student_info = fetch_student_info(email)
         if student_info:
             st.subheader("Profile")
