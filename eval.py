@@ -376,8 +376,47 @@ def fetch_student_info(email):
             cursor.close()
         if conn and conn.is_connected():
             conn.close()
+def adminDashboard():
+    #st.title("👑 Administrator Dashboard")
+
+    # Horizontal radio buttons for navigation
+    selected_option = st.radio(
+        "Select Data to View:",
+        ["Result Details", "Teacher Details", "Student Details"],
+        horizontal=True,
+        key="admin_view"
+    )
+
+    if selected_option == "Result Details":
+        st.subheader("📊 Result Records")
+        result_data = fetch_data("results")  # Assuming you have a 'results' table
+        if result_data:
+            df = pd.DataFrame(result_data)
+            st.dataframe(df)
+        else:
+            st.warning("No result data found in the database.")
+
+    elif selected_option == "Teacher Details":
+        st.subheader("👩🏫 Teacher Records")
+        teacher_data = fetch_data("teacher")
+        if teacher_data:
+            df = pd.DataFrame(teacher_data)
+            st.dataframe(df)
+        else:
+            st.warning("No teacher data found in the database.")
+
+    elif selected_option == "Student Details":
+        st.subheader("📚 Student Records")
+        student_data = fetch_data("students")
+        if student_data:
+            df = pd.DataFrame(student_data)
+            st.dataframe(df)
+        else:
+            st.warning("No student data found in the database.")
+
 def admin_dashboard():
     st.title("👑 Admin Dashboard")
+    dminDashboard()
     if st.button("🔴 Logout"):
         st.session_state.update({"page": "login", "logged_in": False})
         st.rerun()
