@@ -295,7 +295,17 @@ def check_teacher_login(email, password):
         return False
     finally:
         if 'db' in locals(): db.close()
-
+def check_student_login(email, password):
+    try:
+        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
+        cur = db.cursor()
+        cur.execute("SELECT * FROM studnets WHERE email = %s AND password = %s", (email, password))
+        return cur.fetchone() is not None
+    except Exception as e:
+        st.error(f"Database error: {e}")
+        return False
+    finally:
+        if 'db' in locals(): db.close()
 def check_admin_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
