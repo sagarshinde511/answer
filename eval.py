@@ -350,9 +350,6 @@ def teacher_dashboard():
         csv = results.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results", csv, "results.csv", "text/csv")
 def fetch_student_info(email):
-    if st.button("🔴 Logout"):
-        st.session_state.update({"page": "login", "logged_in": False})
-        st.rerun()
 
     """Fetch student information from database using email"""
     conn = None
@@ -460,7 +457,7 @@ if(__name__ == "__main__"):
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
         email = st.session_state.get("email")
-        st.write("Well Come:", email)
+        #st.write("Well Come:", email)
         student_info = fetch_student_info(email)
         if student_info:
             st.subheader("Student Dashboard")
@@ -486,9 +483,14 @@ if(__name__ == "__main__"):
                                 "Name": "Student Name",
                                 "Enrolment": "Enrollment Number"
                             })
+                
             else:
                 st.write("### Marks Information")
                 st.info("Marks details will be displayed here once available")
+            if st.button("🔴 Logout"):
+                st.session_state.update({"page": "login", "logged_in": False})
+                st.rerun()
+
         else:
             st.error("Student information not found")
     elif st.session_state.page == "admin_dash":
