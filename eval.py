@@ -300,7 +300,7 @@ def check_student_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
-        cur.execute("SELECT * FROM students WHERE mail = %s AND password = %s", (email, password))
+        cur.execute("SELECT * FROM students WHERE email = %s AND password = %s", (email, password))
         return cur.fetchone() is not None
     except Exception as e:
         st.error(f"Database error: {e}")
