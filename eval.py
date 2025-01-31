@@ -416,7 +416,7 @@ def adminDashboard():
 
 def admin_dashboard():
     st.title("👑 Admin Dashboard")
-    dminDashboard()
+    adminDashboard()
     if st.button("🔴 Logout"):
         st.session_state.update({"page": "login", "logged_in": False})
         st.rerun()
