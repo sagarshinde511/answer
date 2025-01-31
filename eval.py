@@ -350,13 +350,31 @@ def teacher_dashboard():
         csv = results.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results", csv, "results.csv", "text/csv")
 def fetch_student_info(email):
-    conn = mysql.connector.connect(host="your_host", user="your_user", password="your_password", database="your_database")
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT name, enrolment, email, mobile, branch FROM students WHERE email = %s", (email,))
-    student_info = cursor.fetchone()
-    conn.close()
-    return student_info
-
+    """Fetch student information from database using email"""
+    conn = None
+    cursor = None
+    try:
+        # Use existing database configuration
+        conn = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=passwd,
+            database=db_name
+        )
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(
+            "SELECT name, enrolment, email, mobile, branch FROM students WHERE email = %s", 
+            (email,)
+        )
+        return cursor.fetchone()
+    except Exception as e:
+        st.error(f"Database error: {e}")
+        return None
+    finally:
+        if cursor:
+            cursor.close()
+        if conn and conn.is_connected():
+            conn.close()
 def admin_dashboard():
     st.title("👑 Admin Dashboard")
     if st.button("🔴 Logout"):
