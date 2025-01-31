@@ -295,25 +295,12 @@ def check_teacher_login(email, password):
         return False
     finally:
         if 'db' in locals(): db.close()
-def check_student_login(email, password):
-    
-    try:
-        db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
-        cur = db.cursor()
-        cur.execute("SELECT * FROM students WHERE email = %s AND password = %s", (email, password))
-        return cur.fetchone() is not None
-    except Exception as e:
-        st.error(f"Database error: {e}")
-        return False
-    finally:
-        if 'db' in locals(): db.close()
-
 
 def check_admin_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
-        cur.execute("SELECT * FROM admin WHERE email = %s AND password = %s", (email, password))
+        cur.execute("SELECT * FROM admin WHERE mail = %s AND password = %s", (email, password))
         return cur.fetchone() is not None
     except Exception as e:
         st.error(f"Database error: {e}")
@@ -390,13 +377,6 @@ def login_page():
                     if login_type == "Teacher":
                         if check_teacher_login(email, password):
                             st.session_state.update({"page": "teacher_dash", "role": "teacher"})
-                            st.success("Login successful!")
-                            st.rerun()
-                        else:
-                            st.error("Invalid credentials")
-                    elif login_type == "Student":
-                        if check_student_login(email, password):
-                            st.session_state.update({"page": "student_dash", "role": "student"})
                             st.success("Login successful!")
                             st.rerun()
                         else:
