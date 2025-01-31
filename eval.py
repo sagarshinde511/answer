@@ -295,7 +295,8 @@ def check_teacher_login(email, password):
         return False
     finally:
         if 'db' in locals(): db.close()
-def check_studnt_login(email, password):
+def check_student_login(email, password):
+    
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
         cur = db.cursor()
