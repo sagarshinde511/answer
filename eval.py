@@ -431,8 +431,8 @@ if(__name__ == "__main__"):
         teacher_dashboard()
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
-        email = st.session_state.get("email")
-        student_info = fetch_student_info(email)
+        #email = st.session_state.get("email")
+        student_info = fetch_student_info(global_var)
         if student_info:
             st.subheader("Profile")
             profile_option = st.radio("Select Information", ["Name", "Enrolment", "Email", "Mobile", "Branch"], index=0)
