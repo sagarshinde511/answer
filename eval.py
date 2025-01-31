@@ -18,7 +18,7 @@ conn = mysql.connector.connect(
     user=user,
     password=passwd,
     database=db_name,
-    pool_name=None  # Disabling connection pooling
+    #pool_name=None  # Disabling connection pooling
 )
 # Function to connect to MySQL database
 def get_db_connection():
