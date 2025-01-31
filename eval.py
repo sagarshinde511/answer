@@ -386,6 +386,7 @@ def login_page():
             login_type = st.selectbox("Select Role", ["Teacher", "Student"], key="login_role")
             
             with st.form("login_form"):
+                gloabal email
                 email = st.text_input("Email")
                 password = st.text_input("Password", type="password")
                 submit = st.form_submit_button("Login")
@@ -430,7 +431,7 @@ if(__name__ == "__main__"):
         teacher_dashboard()
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
-        email = st.session_state.get("email")
+        #email = st.session_state.get("email")
         student_info = fetch_student_info(email)
         if student_info:
             st.subheader("Profile")
