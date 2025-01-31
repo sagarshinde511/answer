@@ -389,7 +389,8 @@ def adminDashboard():
 
     if selected_option == "Result Details":
         st.subheader("📊 Result Records")
-        result_data = fetch_data("results")  # Assuming you have a 'results' table
+        result_data =0
+        #result_data = fetch_data("results")  # Assuming you have a 'results' table
         if result_data:
             df = pd.DataFrame(result_data)
             st.dataframe(df)
