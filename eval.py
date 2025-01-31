@@ -332,6 +332,13 @@ def teacher_dashboard():
         
         csv = results.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results", csv, "results.csv", "text/csv")
+def fetch_student_info(email):
+    conn = mysql.connector.connect(host="your_host", user="your_user", password="your_password", database="your_database")
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT name, enrolment, email, mobile, branch FROM students WHERE email = %s", (email,))
+    student_info = cursor.fetchone()
+    conn.close()
+    return student_info
 
 def admin_dashboard():
     st.title("👑 Admin Dashboard")
@@ -381,6 +388,14 @@ def login_page():
                             st.rerun()
                         else:
                             st.error("Invalid credentials")
+                    elif login_type == "Student":
+                        if check_student_login(email, password):
+                            st.session_state.update({"page": "student_dash", "role": "student"})
+                            st.success("Login successful!")
+                            st.rerun()
+                    else:
+                        st.error("Invalid credentials")
+
                     else:
                         st.warning("Student login not implemented yet")
 
@@ -396,5 +411,22 @@ if "page" not in st.session_state:
         "logged_in": False,
         "role": None
     })
+
 if(__name__ == "__main__"):
     login_page()
+    if st.session_state.page == "login":
+        login_page()
+    elif st.session_state.page == "teacher_dash":
+        teacher_dashboard()
+    elif st.session_state.page == "student_dash":
+        st.header("Student Dashboard")
+        student_info = fetch_student_info(st.session_state["email"])
+        
+        if student_info:
+            st.subheader("Profile")
+            profile_option = st.radio("Select Information", ["Name", "Enrolment", "Email", "Mobile", "Branch"], index=0)
+            st.write(f"{profile_option}: {student_info[profile_option.lower()]}")
+        else:
+            st.error("Student information not found")
+    elif st.session_state.page == "admin_dash":
+        admin_dashboard()
