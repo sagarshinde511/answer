@@ -431,15 +431,11 @@ if(__name__ == "__main__"):
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
         email = st.session_state.get("email")
-        
-        if email:
-            student_info = fetch_student_info(email)
-            if student_info:
-                st.subheader("Profile")
-                profile_option = st.radio("Select Information", ["Name", "Enrolment", "Email", "Mobile", "Branch"], index=0)
-                st.write(f"{profile_option}: {student_info[profile_option.lower()]}")
-            else:
-                st.error("Student information not found")
+        student_info = fetch_student_info(email)
+        if student_info:
+            st.subheader("Profile")
+            profile_option = st.radio("Select Information", ["Name", "Enrolment", "Email", "Mobile", "Branch"], index=0)
+            st.write(f"{profile_option}: {student_info[profile_option.lower()]}")
         else:
             st.error("Student information not found")
     elif st.session_state.page == "admin_dash":
