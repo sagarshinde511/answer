@@ -13,7 +13,13 @@ user = "u263681140_students"
 passwd = "testStudents@123"
 db_name = "u263681140_students"
 # Function to check admin credentials
-
+conn = mysql.connector.connect(
+    host=host,
+    user=user,
+    password=password,
+    database=db_name,
+    pool_name=None  # Disabling connection pooling
+)
 # Function to connect to MySQL database
 def get_db_connection():
     return mysql.connector.connect(
