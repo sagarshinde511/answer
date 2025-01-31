@@ -350,6 +350,10 @@ def teacher_dashboard():
         csv = results.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results", csv, "results.csv", "text/csv")
 def fetch_student_info(email):
+    if st.button("🔴 Logout"):
+        st.session_state.update({"page": "login", "logged_in": False})
+        st.rerun()
+
     """Fetch student information from database using email"""
     conn = None
     cursor = None
