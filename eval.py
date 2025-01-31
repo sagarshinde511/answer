@@ -16,7 +16,7 @@ db_name = "u263681140_students"
 conn = mysql.connector.connect(
     host=host,
     user=user,
-    password=password,
+    password=passwd,
     database=db_name,
     pool_name=None  # Disabling connection pooling
 )
