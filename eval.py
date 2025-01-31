@@ -393,8 +393,8 @@ def login_page():
                             st.session_state.update({"page": "student_dash", "role": "student"})
                             st.success("Login successful!")
                             st.rerun()
-                    else:
-                        st.error("Invalid credentials")
+                        else:
+                            st.error("Invalid credentials")
 
                     else:
                         st.warning("Student login not implemented yet")
