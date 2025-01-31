@@ -432,7 +432,7 @@ if(__name__ == "__main__"):
     elif st.session_state.get("page") == "student_dash":
         st.header("Student Dashboard")
         email = st.session_state.get("email")
-        st.write("The email id is:", email)
+        st.write("The email id is:", global_var)
         student_info = fetch_student_info(email)
         if student_info:
             st.subheader("Profile")
