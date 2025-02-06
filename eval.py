@@ -645,7 +645,8 @@ def adminDashboard():
                     else:
                         update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s, WHERE mail = %s"
     
-                    cursor.execute(update_query, (name, mobile, password, branch))
+                    cursor.execute(update_query, (email, name, mobile, password, branch))
+                    
                     conn.commit()
     
                     if cursor.rowcount > 0:
@@ -663,7 +664,7 @@ def adminDashboard():
             
 
         
-def admin_dashboard():
+audef admin_dashboard():
     st.title("👑 Admin Dashboard")
     adminDashboard()
     if st.button("🔴 Logout"):
