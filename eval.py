@@ -574,7 +574,7 @@ def adminDashboard():
     # Horizontal radio buttons for navigation
     selected_option = st.radio(
         "Select Data to View:",
-        ["Result Details", "Teacher Details", "Student Details"],
+        ["Result Details", "Teacher Details", "Student Details", "Update Profile"],
         horizontal=True,
         key="admin_view"
     )
@@ -605,7 +605,12 @@ def adminDashboard():
             st.dataframe(df)
         else:
             st.warning("No student data found in the database.")
+    elif selected_option == "Update Profile":
+        st.subheader("👩🏫 Update Teaher/Student Profile")
+        user_type = st.radio("Select Profile Type to Update:", ["Student", "Teacher"])
+        email = st.text_input("Enter Email to Update Profile:")
 
+        
 def admin_dashboard():
     st.title("👑 Admin Dashboard")
     adminDashboard()
