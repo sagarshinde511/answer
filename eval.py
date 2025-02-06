@@ -625,17 +625,42 @@ def adminDashboard():
             mobile = st.text_input("Mobile Number")
             password = st.text_input("Password", type="password")
             branch = st.selectbox("Branch", branches)     
-            submitted = st.form_submit_button("Update Teacher")            
+            #submitted = st.form_submit_button("Update Teacher")            
         elif user_type == "Student":
+            email = st.text_input("Enter Email to Update Profile:")
             name = st.text_input("Name")
-            enrolment = st.text_input("Enrolment Number")
             mobile = st.text_input("Mobile Number")
             password = st.text_input("Password", type="password")
             branch = st.selectbox("Branch", branches) 
-            submitted = st.form_submit_button("Update Student")
-        #if submitted:
-        #    st.success(f"{user_type} profile updated successfully!")
-        
+            #submitted = st.form_submit_button("Update Student")
+        if st.button("Update Profile"):
+            if email and mobile and name and password and branch:
+                try:
+                    conn = get_db_connection()
+                    cursor = conn.cursor()
+    
+                    # SQL Query based on selected profile type
+                    if user_type == "Student":
+                        update_query = "UPDATE students SET name = %s, mobile = %s, password = %s,branch = %s, WHERE email = %s"
+                    else:
+                        update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s, WHERE mail = %s"
+    
+                    cursor.execute(update_query, (name, mobile, password, branch))
+                    conn.commit()
+    
+                    if cursor.rowcount > 0:
+                        st.success(f"{user_type} Profile Updated Successfully!")
+                    else:
+                        st.warning(f"No {user_type} found with this email.")
+    
+                    cursor.close()
+                    conn.close()
+                except Exception as e:
+                    st.error(f"Error: {e}")
+            else:
+                st.warning("Please fill all fields before updating.")
+    
+            
 
         
 def admin_dashboard():
