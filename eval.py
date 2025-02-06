@@ -438,6 +438,10 @@ def main1():
         # Process each student PDF
         for student_pdf in student_pdfs:
             result = process_student_pdf(correct_answers_file, student_pdf)
+            with open(pdf_path, "rb") as pdf_file:
+                reader = PyPDF2.PdfReader(pdf_file)
+                text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+                subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
             if result:
                 roll_number, df_merged, total_marks_obtained, total_possible_marks = result
                 all_results.append({
@@ -446,8 +450,7 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
-                sub = extract_subject_from_pdf(student_pdf)
-                insert_student_result(roll_number, sub, total_marks_obtained)
+                insert_student_result(roll_number, subject_name, total_marks_obtained)
 
         # Display results for all students
         for result in all_results:
