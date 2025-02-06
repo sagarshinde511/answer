@@ -417,24 +417,15 @@ def insert_student_result(roll_number,subject, marks):
 
 def extract_subject_from_pdf(pdf_file):
     # Ensure that the file is not empty before proceeding
-    if pdf_file is None or len(pdf_file.read()) == 0:
-        raise ValueError("The uploaded PDF file is empty.")
-    
-    # Reset the file pointer after checking the length
-    pdf_file.seek(0)
-
-    # Proceed with processing the PDF
-    pdf_bytes = io.BytesIO(pdf_file.read())
-    
-    try:
-        reader = PyPDF2.PdfReader(pdf_bytes)
+    with open(pdf_path, "rb") as pdf_file:
+        reader = PyPDF2.PdfReader(pdf_file)
         text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+    
         
-        # Extract subject using the given logic
         subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
-        return subject_name
-    except Exception as e:
-        raise ValueError(f"An error occurred while processing the PDF: {str(e)}")
+    #print(f" Subject Name: {subject_name}")
+    return subject_name
+
 
 def main1():
     # File upload inputs
