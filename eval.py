@@ -321,7 +321,7 @@ def assign_marks(similarity, total_marks):
     else:
         return 0
 
-def evaluate_answers(correct_answers, student_answers):
+def evaluate_answers():
     
     st.title("📄 Automated Answer Sheet Grading")
     st.sidebar.header("📂 Upload Files")
@@ -419,28 +419,12 @@ def check_admin_login(email, password):
 
 # -------------------- DASHBOARDS --------------------
 def teacher_dashboard():
-    st.title("📊 Teacher Dashboard")
+    evaluate_answers()    
     if st.button("🔴 Logout"):
         st.session_state.update({"page": "login", "logged_in": False})
         st.rerun()
-
-    correct_file = st.file_uploader("Upload Correct Answers CSV", type=["csv"])
-    student_file = st.file_uploader("Upload Student Answers CSV", type=["csv"])
     
-    if correct_file and student_file:
-        correct_answers = pd.read_csv(correct_file)
-        student_answers = pd.read_csv(student_file)
-        
-        results = evaluate_answers(correct_answers, student_answers)
-        total_marks = results['Marks_Obtained'].sum()
-        max_marks = correct_answers['Marks'].sum()
-        
-        st.subheader("Evaluation Results")
-        st.dataframe(results[['Question', 'Answers', 'Marks_Obtained']])
-        st.markdown(f"**Total Marks: {total_marks}/{max_marks}**")
-        
-        csv = results.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Results", csv, "results.csv", "text/csv")
+
 def fetch_student_info(email):
 
     """Fetch student information from database using email"""
