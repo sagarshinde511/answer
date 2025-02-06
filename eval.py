@@ -414,17 +414,15 @@ def insert_student_result(roll_number, marks):
         if connection:
             connection.close()
 
-
-def extract_subject_from_pdf(pdf_file):
-    # Ensure that the file is not empty before proceeding
-    with open(pdf_path, "rb") as pdf_file:
-        reader = PyPDF2.PdfReader(pdf_file)
-        text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
-    
-        
-        subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
-    #print(f" Subject Name: {subject_name}")
-    return subject_name
+def extract_subject_from_pdf(uploaded_file):
+    pdf_reader = PdfReader(uploaded_file)
+    for page in pdf_reader.pages:
+        text = page.extract_text()
+        if text:
+            for line in text.split("\n"):
+                if line.strip().startswith("Subject:"):
+                    return line.split(":")[1].strip()
+    return None
 
 
 def main1():
@@ -446,7 +444,9 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
+                extract_subject_from_pdf(student_pdf)
                 insert_student_result(roll_number, total_marks_obtained)
+                
 
         # Display results for all students
         for result in all_results:
