@@ -154,6 +154,9 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
+                        st.session_state.update({"page": "login", "logged_in": False})
+                        st.rerun()
+
                 else:
                     st.warning("Please fill all the fields!")
         
@@ -174,6 +177,9 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_student(name, enrolment, mail, mobile, password, branch)
+                        st.session_state.update({"page": "login", "logged_in": False})
+                        st.rerun()
+
                 else:
                     st.warning("Please fill all the fields!")
 
