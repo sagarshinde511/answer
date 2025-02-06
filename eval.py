@@ -638,24 +638,26 @@ def adminDashboard():
                 try:
                     conn = get_db_connection()
                     cursor = conn.cursor()
-    
-                    # SQL Query based on selected profile type
-                    if user_type == "Student":
-                        update_query = "UPDATE students SET name = %s, mobile = %s, password = %s,branch = %s WHERE email = %s"
+                    if len(mobile) == 10:
+                        if user_type == "Student":
+                            update_query = "UPDATE students SET name = %s, mobile = %s, password = %s,branch = %s WHERE email = %s"
+                        else:
+                            update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s WHERE mail = %s"
+        
+                        cursor.execute(update_query, (name, mobile, password, branch, email))
+                        
+                        conn.commit()
+        
+                        if cursor.rowcount > 0:
+                            st.success(f"{user_type} Profile Updated Successfully!")
+                        else:
+                            st.warning(f"No {user_type} found with this email.")
+        
+                        cursor.close()
+                        conn.close()
                     else:
-                        update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s WHERE mail = %s"
-    
-                    cursor.execute(update_query, (name, mobile, password, branch, email))
+                        st.warning(f" invalid mobile number.")
                     
-                    conn.commit()
-    
-                    if cursor.rowcount > 0:
-                        st.success(f"{user_type} Profile Updated Successfully!")
-                    else:
-                        st.warning(f"No {user_type} found with this email.")
-    
-                    cursor.close()
-                    conn.close()
                 except Exception as e:
                     st.error(f"Error: {e}")
             else:
