@@ -366,8 +366,48 @@ def process_student_pdf(correct_answers_file, student_pdf):
     except Exception as e:
         st.error(f"🚨 Error processing files: {e}")
         return None
+def insert_student_result(roll_number, marks):
+    
+    cursor = None  # Initialize cursor to None
+    try:
+        # Connect to the database
+        connection = mysql.connector.connect(
+            host="82.180.143.66",
+            user="u263681140_students",
+            password="testStudents@123",
+            database="u263681140_students"
+        )
+        
+        # Create a cursor object
+        cursor = connection.cursor()
+        
+        # SQL query to insert data
+        query = """
+        INSERT INTO StudentResult (RollNumber, Subject, Marks) 
+        VALUES (%s, %s, %s)
+        """
+        subject = "Cloud Computing"  # Set default subject
+        marks = int(marks)
+        # Prepare the data to be inserted
+        data = (roll_number, "Cloud Computing", marks)
 
-# Main Streamlit function to handle multiple PDFs
+        # Execute the query
+        cursor.execute(query, data)
+
+        # Commit the transaction
+        connection.commit()
+        st.write(f"Data inserted for Roll Number {roll_number}")
+
+    except mysql.connector.Error as err:
+        st.write(f"Error: {err}")
+    finally:
+        # Close the cursor and connection only if cursor was created
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+
 def main1():
     # File upload inputs
     correct_answers_file = st.file_uploader("Upload Correct Answers File", type="xlsx")
@@ -387,6 +427,7 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
+                insert_student_result(roll_number, total_marks_obtained)
 
         # Display results for all students
         for result in all_results:
@@ -483,7 +524,8 @@ def adminDashboard():
     if selected_option == "Result Details":
         st.subheader("📊 Result Records")
         result_data =0
-        #result_data = fetch_data("results")  # Assuming you have a 'results' table
+        
+        result_data = Fetch_ResultData()  
         if result_data:
             df = pd.DataFrame(result_data)
             st.dataframe(df)
