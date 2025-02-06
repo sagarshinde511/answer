@@ -154,10 +154,11 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
+                        st.experimental_rerun()
 
                 else:
                     st.warning("Please fill all the fields!")
-                st.experimental_rerun()        
+                        
         elif registration_type == "Student":
             name = st.text_input("Name")
             enrolment = st.text_input("Enrolment Number")
