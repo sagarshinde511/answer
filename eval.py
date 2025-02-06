@@ -154,8 +154,7 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
-                        st.session_state.clear()
-                        st.session_state["page"] = "login"
+                        st.session_state.update({"page": "login", "logged_in": True})
                         st.rerun()
 
                 else:
