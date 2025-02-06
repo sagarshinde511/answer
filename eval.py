@@ -448,7 +448,7 @@ def main1():
                     "Roll Number": roll_number,
                     "Total Marks Obtained": total_marks_obtained,
                     "Total Possible Marks": total_possible_marks,
-                    "Details": df_merged
+                    "Details": df_merged,
                     "Subject": subject_name
                 })
                 insert_student_result(roll_number, subject_name, total_marks_obtained)
