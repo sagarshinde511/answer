@@ -682,7 +682,32 @@ def HomePage():
             &copy; 2025 Automated Answer Evaluation System. All Rights Reserved.
         </div>
     """, unsafe_allow_html=True)
-# -------------------- MAIN PAGE TABS --------------------
+def fetch_marks_subject(rno):
+    # Establish the connection to the database
+    connection = get_db_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    # SQL query to select Marks and Subject where RollNumber = rno
+    query = "SELECT Marks, Subject FROM StudentResult WHERE RollNumber = %s"
+
+    # Execute the query with the given RollNumber
+    cursor.execute(query, (rno,))
+
+    # Fetch all rows from the result of the query
+    results = cursor.fetchall()
+
+    # Print the results in table format using tabulate
+    if results:
+        print(tabulate(results, headers=["Marks", "Subject"], tablefmt="grid"))
+    else:
+        print(f"No data found for RollNumber {rno}")
+
+    # Close the cursor and connection
+    cursor.close()
+    connection.close()
+        
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
     tab1, tab2, tab3, tab4 = st.tabs(["Home","Login", "Signup", "Admin Login"])
@@ -750,9 +775,6 @@ if(__name__ == "__main__"):
         #st.write("Well Come:", email)
         student_info = fetch_student_info(email)
         if student_info:
-            st.subheader("Student Dashboard")
-            
-            # Create radio buttons for navigation
             selected_tab = st.radio("Select View", ["Profile", "Marks"], horizontal=True)
             
             if selected_tab == "Profile":
@@ -776,6 +798,7 @@ if(__name__ == "__main__"):
                 
             else:
                 st.write("### Marks Information")
+                fetch_marks_subject(student_info['enrolment'])
                 st.info("Marks details will be displayed here once available")
             if st.button("🔴 Logout"):
                 st.session_state.update({"page": "login", "logged_in": False})
