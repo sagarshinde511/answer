@@ -531,9 +531,16 @@ def read_student_results():
         # Fetch all records from the table
         records = cursor.fetchall()
 
-        # Create a Pandas DataFrame from the fetched records
+        # Check the number of columns returned
+        print(f"Number of columns returned: {len(records[0]) if records else 0}")
+
+        # Ensure the number of columns matches
         columns = ['RollNumber', 'Subject', 'Marks']  # List the column names
-        df = pd.DataFrame(records, columns=columns)
+        if records:
+            # Create a Pandas DataFrame from the fetched records
+            df = pd.DataFrame(records, columns=columns)
+        else:
+            df = pd.DataFrame(columns=columns)  # Empty DataFrame with correct columns
 
         # Return the DataFrame
         return df
