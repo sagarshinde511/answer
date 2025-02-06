@@ -373,7 +373,7 @@ def process_student_pdf(correct_answers_file, student_pdf):
     except Exception as e:
         st.error(f"🚨 Error processing files: {e}")
         return None
-def insert_student_result(roll_number, marks):
+def insert_student_result(roll_number,subject marks):
     
     cursor = None  # Initialize cursor to None
     try:
@@ -393,10 +393,9 @@ def insert_student_result(roll_number, marks):
         INSERT INTO StudentResult (RollNumber, Subject, Marks) 
         VALUES (%s, %s, %s)
         """
-        subject = "Cloud Computing"  # Set default subject
         marks = int(marks)
         # Prepare the data to be inserted
-        data = (roll_number, "Cloud Computing", marks)
+        data = (roll_number, subject, marks)
 
         # Execute the query
         cursor.execute(query, data)
@@ -440,7 +439,8 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
-                insert_student_result(roll_number, total_marks_obtained)
+                sub = extract_subject_from_pdf()
+                insert_student_result(roll_number, sub, total_marks_obtained)
 
         # Display results for all students
         for result in all_results:
