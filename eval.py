@@ -368,17 +368,13 @@ def process_student_pdf(correct_answers_file, student_pdf):
             # Compute total marks
             total_marks_obtained = df_merged['Assigned Marks'].sum()
             total_possible_marks = correct_answers['Marks'].sum()
-            #with open(student_pdf, "rb") as pdf_file:
-            #    reader = PyPDF2.PdfReader(pdf_file)
-             #   text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
-             #   subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
 
-            return roll_number, df_merged, total_marks_obtained, total_possible_marks,"subject_name"
+            return roll_number, df_merged, total_marks_obtained, total_possible_marks
 
     except Exception as e:
         st.error(f"🚨 Error processing files: {e}")
         return None
-        
+
 def insert_student_result(roll_number,subject, marks):
     
     cursor = None  # Initialize cursor to None
@@ -448,10 +444,9 @@ def main1():
                     "Roll Number": roll_number,
                     "Total Marks Obtained": total_marks_obtained,
                     "Total Possible Marks": total_possible_marks,
-                    "Details": df_merged,
-                    "Subject": subject_name
+                    "Details": df_merged
                 })
-                insert_student_result(roll_number, subject_name, total_marks_obtained)
+                insert_student_result(roll_number, total_marks_obtained)
 
         # Display results for all students
         for result in all_results:
