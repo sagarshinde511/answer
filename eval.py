@@ -12,6 +12,7 @@ from rapidfuzz import fuzz
 import os
 import io
 import PyPDF2
+from PyPDF2 import PdfReader
 
 # Database configuration
 host = "82.180.143.66"
