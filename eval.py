@@ -178,7 +178,7 @@ def RegisterUser():
                     st.warning("Please fill all the fields!")
 
 def is_valid_email(email):
-    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    pattern = r'^[\w\.-]+@[\w\.-]+\.(com|in|org|edu|ac\.in)$'
     return re.match(pattern, email) is not None
 
 def is_valid_mobile(mobile):
