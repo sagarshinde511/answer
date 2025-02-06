@@ -663,8 +663,6 @@ def login_page():
 
     with tab3:
         RegisterUser()
-        st.session_state.update({"page": "login", "logged_in": False})
-        st.rerun()
 
     with tab4:
         #st.header("Administrator Login")
