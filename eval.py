@@ -577,13 +577,11 @@ def adminDashboard():
     if selected_option == "Result Details":
         st.subheader("📊 Result Records")
         result_data =0
-        
-        result_data = read_student_results()  
-        if result_data:
-            df = pd.DataFrame(result_data)
-            st.dataframe(df)
+        df_results = read_student_results()
+        if df_results is not None:
+            st.dataframe(df_results)
         else:
-            st.warning("No result data found in the database.")
+            st.write("No student results found in the database.")
 
     elif selected_option == "Teacher Details":
         st.subheader("👩🏫 Teacher Records")
