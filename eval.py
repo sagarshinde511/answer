@@ -10,7 +10,7 @@ import fitz  # PyMuPDF for reading PDFs
 import re
 from rapidfuzz import fuzz
 import os
-
+import PyPDF2
 
 # Database configuration
 host = "82.180.143.66"
@@ -413,7 +413,14 @@ def insert_student_result(roll_number, marks):
         if connection:
             connection.close()
 
-
+def extract_subject_from_pdf(pdf_path):
+    with open(pdf_path, "rb") as pdf_file:
+        reader = PyPDF2.PdfReader(pdf_file)
+        text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+    
+    # Extract subject using the given logic
+    subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
+    return subject_name
 def main1():
     # File upload inputs
     correct_answers_file = st.file_uploader("Upload Correct Answers File", type="xlsx")
