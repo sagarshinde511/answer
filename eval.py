@@ -633,7 +633,7 @@ def adminDashboard():
             password = st.text_input("Password", type="password")
             branch = st.selectbox("Branch", branches) 
             submitted = st.form_submit_button("Update Student")
-        if submitted:
+    if submitted:
         st.success(f"{user_type} profile updated successfully!")
         
 
