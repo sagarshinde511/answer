@@ -624,16 +624,17 @@ def adminDashboard():
             name = st.text_input("Name")
             mobile = st.text_input("Mobile Number")
             password = st.text_input("Password", type="password")
-            branch = st.selectbox("Branch", branches) 
-            submitted = st.form_submit_button("Update Teacher")
+            branch = st.selectbox("Branch", branches)     
+            submitted = st.form_submit_button("Update Teacher")            
         elif user_type == "Student":
             name = st.text_input("Name")
             enrolment = st.text_input("Enrolment Number")
             mobile = st.text_input("Mobile Number")
             password = st.text_input("Password", type="password")
             branch = st.selectbox("Branch", branches) 
-            submitted = st.form_submit_button("Update Studnet")
-
+            submitted = st.form_submit_button("Update Student")
+        if submitted:
+        st.success(f"{user_type} profile updated successfully!")
         
 
         
