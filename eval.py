@@ -641,9 +641,9 @@ def adminDashboard():
     
                     # SQL Query based on selected profile type
                     if user_type == "Student":
-                        update_query = "UPDATE students SET name = %s, mobile = %s, password = %s,branch = %s, WHERE email = %s"
+                        update_query = "UPDATE students SET name = %s, mobile = %s, password = %s,branch = %s WHERE email = %s"
                     else:
-                        update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s, WHERE mail = %s"
+                        update_query = "UPDATE teacher SET name = %s, mobile = %s, password = %s,branch = %s WHERE mail = %s"
     
                     cursor.execute(update_query, (name, mobile, password, branch, email))
                     
