@@ -92,7 +92,7 @@ def adminLogin():
         # Horizontal radio buttons
         selected_option = st.radio(
             "Select Data to View:",
-            ["Students", "Teachers","Check Marks"],
+            ["Students", "Teachers","UpdateProfile", "Check Marks"],
             horizontal=True,
             key="admin_view"
         )
