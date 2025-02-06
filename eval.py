@@ -373,7 +373,8 @@ def process_student_pdf(correct_answers_file, student_pdf):
     except Exception as e:
         st.error(f"🚨 Error processing files: {e}")
         return None
-def insert_student_result(roll_number,subject marks):
+        
+def insert_student_result(roll_number,subject, marks):
     
     cursor = None  # Initialize cursor to None
     try:
