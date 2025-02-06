@@ -531,23 +531,30 @@ def read_student_results():
         # Fetch all records from the table
         records = cursor.fetchall()
 
-        # Check the number of columns returned
-        print(f"Number of columns returned: {len(records[0]) if records else 0}")
+        # Fetch column names dynamically
+        column_names = [i[0] for i in cursor.description]  # Get column names from DB
 
-        # Ensure the number of columns matches
-        columns = ['RollNumber', 'Subject', 'Marks']  # List the column names
-        if records:
-            # Create a Pandas DataFrame from the fetched records
-            df = pd.DataFrame(records, columns=columns)
-        else:
-            df = pd.DataFrame(columns=columns)  # Empty DataFrame with correct columns
+        # Debugging: print records and column names
+        print(f"Fetched Records: {records}")
+        print(f"Column Names from DB: {column_names}")
 
-        # Return the DataFrame
+        # Check if records are empty
+        if not records:
+            st.warning("No records found in the database.")
+            return pd.DataFrame(columns=column_names)  # Return an empty dataframe
+
+        # Create a Pandas DataFrame using dynamic column names
+        df = pd.DataFrame(records, columns=column_names)
+
         return df
 
     except mysql.connector.Error as err:
-        print(f"Error: {err}")
-        return None
+        st.error(f"Database Error: {err}")
+        return pd.DataFrame()
+
+    except ValueError as ve:
+        st.error(f"Data Processing Error: {ve}")
+        return pd.DataFrame()
 
     finally:
         # Close the cursor and connection
@@ -555,6 +562,7 @@ def read_student_results():
             cursor.close()
         if connection:
             connection.close()
+
 def adminDashboard():
     #st.title("👑 Administrator Dashboard")
 
