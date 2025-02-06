@@ -157,8 +157,7 @@ def RegisterUser():
 
                 else:
                     st.warning("Please fill all the fields!")
-                st.experimental_set_query_params(refresh=str(True))
-        
+                st.experimental_rerun()        
         elif registration_type == "Student":
             name = st.text_input("Name")
             enrolment = st.text_input("Enrolment Number")
