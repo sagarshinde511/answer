@@ -438,7 +438,7 @@ def main1():
         # Process each student PDF
         for student_pdf in student_pdfs:
             result = process_student_pdf(correct_answers_file, student_pdf)
-            with open(pdf_path, "rb") as pdf_file:
+            with open(student_pdf, "rb") as pdf_file:
                 reader = PyPDF2.PdfReader(pdf_file)
                 text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
                 subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
