@@ -9,7 +9,7 @@ import re
 import fitz  # PyMuPDF for reading PDFs
 import re
 from rapidfuzz import fuzz
-
+import os
 # Database configuration
 host = "82.180.143.66"
 user = "u263681140_students"
