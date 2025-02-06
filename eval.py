@@ -389,7 +389,7 @@ def insert_student_result(roll_number, marks):
         
         # Create a cursor object
         cursor = connection.cursor()
-        
+        subject = "Cloud Computing"
         # SQL query to insert data
         query = """
         INSERT INTO StudentResult (RollNumber, Subject, Marks) 
