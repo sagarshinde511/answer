@@ -10,6 +10,8 @@ import fitz  # PyMuPDF for reading PDFs
 import re
 from rapidfuzz import fuzz
 import os
+
+
 # Database configuration
 host = "82.180.143.66"
 user = "u263681140_students"
@@ -698,13 +700,12 @@ def fetch_marks_subject(rno):
     # Fetch all rows from the result of the query
     results = cursor.fetchall()
 
-    # Print the results in table format using tabulate
+    
     if results:
-        print(tabulate(results, headers=["Marks", "Subject"], tablefmt="grid"))
+        df = pd.DataFrame(results)
+        st.table(df)
     else:
-        print(f"No data found for RollNumber {rno}")
-
-    # Close the cursor and connection
+        st.write(f"No results found for Roll Number {roll_number}.")
     cursor.close()
     connection.close()
         
