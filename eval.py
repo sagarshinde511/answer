@@ -661,10 +661,8 @@ def adminDashboard():
             else:
                 st.warning("Please fill all fields before updating.")
     
-            
-
-        
-audef admin_dashboard():
+             
+def admin_dashboard():
     st.title("👑 Admin Dashboard")
     adminDashboard()
     if st.button("🔴 Logout"):
