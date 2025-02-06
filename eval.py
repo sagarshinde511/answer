@@ -509,6 +509,45 @@ def fetch_student_info(email):
             cursor.close()
         if conn and conn.is_connected():
             conn.close()
+def read_student_results():
+    try:
+        # Connect to the database
+        connection = mysql.connector.connect(
+            host="82.180.143.66",
+            user="u263681140_students",
+            password="testStudents@123",
+            database="u263681140_students"
+        )
+        
+        # Create a cursor object
+        cursor = connection.cursor()
+
+        # SQL query to select all data from StudentResult table
+        query = "SELECT * FROM StudentResult"
+
+        # Execute the query
+        cursor.execute(query)
+
+        # Fetch all records from the table
+        records = cursor.fetchall()
+
+        # Create a Pandas DataFrame from the fetched records
+        columns = ['RollNumber', 'Subject', 'Marks']  # List the column names
+        df = pd.DataFrame(records, columns=columns)
+
+        # Return the DataFrame
+        return df
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
+
+    finally:
+        # Close the cursor and connection
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
 def adminDashboard():
     #st.title("👑 Administrator Dashboard")
 
@@ -524,7 +563,7 @@ def adminDashboard():
         st.subheader("📊 Result Records")
         result_data =0
         
-        result_data = Fetch_ResultData()  
+        result_data = read_student_results()  
         if result_data:
             df = pd.DataFrame(result_data)
             st.dataframe(df)
