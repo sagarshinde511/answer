@@ -376,7 +376,7 @@ def process_student_pdf(correct_answers_file, student_pdf):
         st.error(f"🚨 Error processing files: {e}")
         return None
 
-def insert_student_result(roll_number, marks):
+def insert_student_result(roll_number, subject, marks):
     
     cursor = None  # Initialize cursor to None
     try:
@@ -390,7 +390,7 @@ def insert_student_result(roll_number, marks):
         
         # Create a cursor object
         cursor = connection.cursor()
-        subject = "Cloud Computing"
+        #subject = "Cloud Computing"
         # SQL query to insert data
         query = """
         INSERT INTO StudentResult (RollNumber, Subject, Marks) 
@@ -445,8 +445,8 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
-                extract_subject_from_pdf(student_pdf)
-                insert_student_result(roll_number, total_marks_obtained)
+                sub = extract_subject_from_pdf(student_pdf)
+                insert_student_result(roll_number,sub, total_marks_obtained)
                 
 
         # Display results for all students
