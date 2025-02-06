@@ -413,14 +413,18 @@ def insert_student_result(roll_number,subject, marks):
         if connection:
             connection.close()
 
-def extract_subject_from_pdf(pdf_path):
-    with open(pdf_path, "rb") as pdf_file:
-        reader = PyPDF2.PdfReader(pdf_file)
-        text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+
+def extract_subject_from_pdf(pdf_file):
+    # pdf_file is now a Streamlit UploadedFile object, so we can use io.BytesIO to read it
+    pdf_bytes = io.BytesIO(pdf_file.read())
+    
+    reader = PyPDF2.PdfReader(pdf_bytes)
+    text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
     
     # Extract subject using the given logic
     subject_name = next((line.split(":")[1].strip() for line in text.split("\n") if "Subject :" in line), "Unknown")
-    return subject_name
+    return subject_name   
+
 def main1():
     # File upload inputs
     correct_answers_file = st.file_uploader("Upload Correct Answers File", type="xlsx")
