@@ -607,8 +607,34 @@ def adminDashboard():
             st.warning("No student data found in the database.")
     elif selected_option == "Update Profile":
         st.subheader("👩🏫 Update Teaher/Student Profile")
+        branches = [
+        "Computer Science", 
+        "Mechanical Engineering", 
+        "Electrical Engineering", 
+        "Civil Engineering", 
+        "Electronics and Communication", 
+        "Information Technology",
+        "Chemical Engineering", 
+        "Aerospace Engineering"
+        ]
+
         user_type = st.radio("Select Profile Type to Update:", ["Student", "Teacher"])
-        email = st.text_input("Enter Email to Update Profile:")
+        if user_type == "Teacher":
+            email = st.text_input("Enter Email to Update Profile:")
+            name = st.text_input("Name")
+            mobile = st.text_input("Mobile Number")
+            password = st.text_input("Password", type="password")
+            branch = st.selectbox("Branch", branches) 
+            submitted = st.form_submit_button("Update Teacher")
+        elif user_type == "Student":
+            name = st.text_input("Name")
+            enrolment = st.text_input("Enrolment Number")
+            mobile = st.text_input("Mobile Number")
+            password = st.text_input("Password", type="password")
+            branch = st.selectbox("Branch", branches) 
+            submitted = st.form_submit_button("Update Studnet")
+
+        
 
         
 def admin_dashboard():
