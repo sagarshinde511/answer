@@ -10,6 +10,7 @@ import fitz  # PyMuPDF for reading PDFs
 import re
 from rapidfuzz import fuzz
 import os
+import io
 import PyPDF2
 
 # Database configuration
