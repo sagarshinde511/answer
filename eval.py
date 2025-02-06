@@ -440,7 +440,7 @@ def main1():
                     "Total Possible Marks": total_possible_marks,
                     "Details": df_merged
                 })
-                sub = extract_subject_from_pdf()
+                sub = extract_subject_from_pdf(student_pdf)
                 insert_student_result(roll_number, sub, total_marks_obtained)
 
         # Display results for all students
