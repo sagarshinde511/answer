@@ -158,9 +158,7 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
-                        redirect_url = "https://answer-gizasfwusx7ddft8ewxcpx.streamlit.app/" 
-                        js = f"<script>window.location.href = '{redirect_url}';</script>"
-                        st.components.v1.html(js, height=0)
+                        login_page()
                         
         elif registration_type == "Student":
             name = st.text_input("Name")
