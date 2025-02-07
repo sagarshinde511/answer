@@ -158,9 +158,11 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
-                        st.session_state.update({"page": "login", "logged_in": True})
+                        st.session_state.registered_email = mail
+                        st.session_state.registered_password = password
+                        st.session_state.page = "login"  # Redirect to login page
                         st.rerun()
-                        
+s                        
         elif registration_type == "Student":
             name = st.text_input("Name")
             enrolment = st.text_input("Enrolment Number")
@@ -178,8 +180,10 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_student(name, enrolment, mail, mobile, password, branch)
-                        st.session_state.update({"page": "login", "logged_in": True})
-                        st.rerun()
+                        st.session_state.registered_email = mail
+                        st.session_state.registered_password = password
+                        st.session_state.page = "login"  # Redirect to login page
+                        st.rerun()                                            
 
                 else:
                     st.warning("Please fill all the fields!")
@@ -737,7 +741,8 @@ def login_page():
         with col2:
             st.header("User Login")
             login_type = st.selectbox("Select Role", ["Teacher", "Student"], key="login_role")
-            
+            prefilled_email = st.session_state.get("registered_email", "")
+            prefilled_password = st.session_state.get("registered_password", "")
             with st.form("login_form"):
                 global global_var
                 email = st.text_input("Email")
