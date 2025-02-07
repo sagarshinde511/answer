@@ -161,8 +161,7 @@ def RegisterUser():
                         st.session_state.registered_email = mail
                         st.session_state.registered_password = password
                         st.session_state.page = "login"  # Redirect to login page
-                        st.rerun()
-s                        
+                        st.rerun()                        
         elif registration_type == "Student":
             name = st.text_input("Name")
             enrolment = st.text_input("Enrolment Number")
