@@ -444,6 +444,7 @@ def main1():
                     "Details": df_merged
                 })
                 sub = extract_subject_from_pdf(student_pdf)
+                st.write("Subject is: ", sub)
                 insert_student_result(roll_number,sub, total_marks_obtained)
                 
 
