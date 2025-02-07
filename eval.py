@@ -158,7 +158,7 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
-                         st.empty() 
+                        st.empty() 
                         login_page()
                         
         elif registration_type == "Student":
