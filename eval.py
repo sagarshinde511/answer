@@ -158,10 +158,9 @@ def RegisterUser():
                         st.warning("Mobile number must be 10 digits!")
                     else:
                         insert_teacher(name, mail, mobile, password, branch)
-                        st.experimental_rerun()
-
-                else:
-                    st.warning("Please fill all the fields!")
+                        redirect_url = "https://answer-gizasfwusx7ddft8ewxcpx.streamlit.app/" 
+                        js = f"<script>window.location.href = '{redirect_url}';</script>"
+                        st.components.v1.html(js, height=0)
                         
         elif registration_type == "Student":
             name = st.text_input("Name")
