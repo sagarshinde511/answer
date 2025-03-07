@@ -716,15 +716,17 @@ def fetch_marks_subject(rno):
     # Fetch all rows from the result of the query
     results = cursor.fetchall()
 
-    
-    if results:
-        df = pd.DataFrame(results)
-        st.table(df)
-    else:
-        st.write(f"No results found for Roll Number {roll_number}.")
+    # Close the cursor and connection
     cursor.close()
     connection.close()
-        
+
+    if results:
+        # Convert results to DataFrame with column names
+        df = pd.DataFrame(results, columns=["Marks", "Subject"])
+        st.table(df)
+    else:
+        st.info("Marks details will be displayed here once available.")
+
 def login_page():
     st.title("📚 Automated Answer Evaluation System")
     tab1, tab2, tab3, tab4 = st.tabs(["Home","Login", "Signup", "Admin Login"])
@@ -817,7 +819,7 @@ if(__name__ == "__main__"):
             else:
                 st.write("### Marks Information")
                 fetch_marks_subject(student_info['enrolment'])
-                st.info("Marks details will be displayed here once available")
+                #st.info("Marks details will be displayed here once available")
             if st.button("🔴 Logout"):
                 st.session_state.update({"page": "login", "logged_in": False})
                 st.rerun()
