@@ -16,9 +16,9 @@ from PyPDF2 import PdfReader
 
 # Database configuration
 host = "82.180.143.66"
-user = "u263681140_students"
+user = "u263681140_students1"
 passwd = "testStudents@123"
-db_name = "u263681140_students"
+db_name = "u263681140_students1"
 # Function to check admin credentials
 conn = mysql.connector.connect(
     host=host,
