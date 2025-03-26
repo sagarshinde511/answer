@@ -10,4 +10,4 @@ pymupdf
 rapidfuzz
 openpyxl
 PyPDF2
-zipfile
+zipfile36 
