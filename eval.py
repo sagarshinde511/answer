@@ -328,6 +328,15 @@ def assign_marks(similarity, total_marks):
         return total_marks * 0.75
     elif similarity >= 50:
         return total_marks * 0.50
+    elif similarity >= 40:
+        return total_marks * 0.40
+    elif similarity >= 30:
+        return total_marks * 0.30
+    elif similarity >= 20:
+        return total_marks * 0.20
+    elif similarity >= 10:
+        return total_marks * 0.10
+
     else:
         return 0
 
