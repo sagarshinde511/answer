@@ -443,22 +443,29 @@ def main1():
 
     if correct_answers_file and student_pdfs:
         all_results = []
+        zip_filename = "all_results.zip"
 
-        # Process each student PDF
-        for student_pdf in student_pdfs:
-            result = process_student_pdf(correct_answers_file, student_pdf)
-            if result:
-                roll_number, df_merged, total_marks_obtained, total_possible_marks = result
-                all_results.append({
-                    "Roll Number": roll_number,
-                    "Total Marks Obtained": total_marks_obtained,
-                    "Total Possible Marks": total_possible_marks,
-                    "Details": df_merged
-                })
-                sub = extract_subject_from_pdf(student_pdf)
-                st.write("Subject is: ", sub)
-                insert_student_result(roll_number,sub, total_marks_obtained)
-                
+        with zipfile.ZipFile(zip_filename, 'w') as zipf:
+            # Process each student PDF
+            for student_pdf in student_pdfs:
+                result = process_student_pdf(correct_answers_file, student_pdf)
+                if result:
+                    roll_number, df_merged, total_marks_obtained, total_possible_marks = result
+                    all_results.append({
+                        "Roll Number": roll_number,
+                        "Total Marks Obtained": total_marks_obtained,
+                        "Total Possible Marks": total_possible_marks,
+                        "Details": df_merged
+                    })
+                    
+                    sub = extract_subject_from_pdf(student_pdf)
+                    st.write("Subject is: ", sub)
+                    insert_student_result(roll_number, sub, total_marks_obtained)
+                    
+                    # Save individual results to CSV and add to ZIP
+                    output_file = f"{roll_number}_graded_answers.csv"
+                    df_merged.to_csv(output_file, index=False)
+                    zipf.write(output_file)
 
         # Display results for all students
         for result in all_results:
@@ -466,12 +473,9 @@ def main1():
             st.write(f"### ✅ Total Marks: {result['Total Marks Obtained']:.2f} / {result['Total Possible Marks']:.2f}")
             st.dataframe(result["Details"])
 
-            # Save and download individual results
-            output_file = f"{result['Roll Number']}_graded_answers.csv"
-            result["Details"].to_csv(output_file, index=False)
-            st.download_button(f"⬇️ Download Results for {result['Roll Number']}", data=open(output_file, "rb"), file_name=output_file, mime="text/csv")
-
-
+        # Provide a single download button for all results
+        with open(zip_filename, "rb") as zipf:
+            st.download_button("⬇️ Download All Results", data=zipf, file_name=zip_filename, mime="application/zip")
 def check_teacher_login(email, password):
     try:
         db = mysql.connector.connect(host=host, user=user, password=passwd, database=db_name)
