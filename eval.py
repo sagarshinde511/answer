@@ -13,6 +13,7 @@ import os
 import io
 import PyPDF2
 from PyPDF2 import PdfReader
+import zipfile
 
 # Database configuration
 host = "82.180.143.66"
