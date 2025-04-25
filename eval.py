@@ -462,7 +462,10 @@ def main1():
                     sub = extract_subject_from_pdf(student_pdf)
                     st.write("Subject is: ", sub)
                     insert_student_result(roll_number, sub, total_marks_obtained)
-                    
+                    # Add total marks to each row
+                    df_merged["Total Marks Obtained"] = total_marks_obtained
+                    df_merged["Total Possible Marks"] = total_possible_marks
+
                     # Save individual results to CSV and add to ZIP
                     output_file = f"{roll_number}_graded_answers.csv"
                     df_merged.to_csv(output_file, index=False)
